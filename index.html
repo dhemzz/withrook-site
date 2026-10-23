@@ -4,10 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rook · The videos you save, actually used</title>
-<meta name="description" content="Save any video. Rook remembers it for you. Breakdowns, timestamps and nudges for the videos you save.">
+<meta name="description" content="Share a TikTok, Reel or YouTube video to Rook. It turns it into steps, lists and key points, files it for you, and brings it back when you need it.">
 <meta name="theme-color" content="#0B0D10">
 <meta property="og:title" content="Rook · The videos you save, actually used">
-<meta property="og:description" content="Save any video. Rook remembers it for you.">
+<meta property="og:description" content="Rook turns the videos you save into steps, lists and key points, and brings them back when you need them. Join the early access list.">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Rook: the videos you save, actually used">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Rook">
 <meta property="og:image" content="https://withrook.app/og.png">
 <meta property="og:url" content="https://withrook.app/">
 <meta name="twitter:card" content="summary_large_image">
@@ -248,6 +253,21 @@
   .card h3 { margin: 0 0 8px; font-size: 17px; font-weight: 650; letter-spacing: -0.01em; }
   .card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
   .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-bottom: 14px; }
+  .faq { padding: 0 0 72px; max-width: 760px; margin: 0 auto; }
+  .faq h2 { font-size: clamp(24px, 3.4vw, 34px); letter-spacing: -0.025em; margin: 0 0 18px; text-align: center; }
+  .faq details { border-bottom: 1px solid var(--stroke); }
+  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 4px; font-size: 16.5px; font-weight: 600; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: ""; flex: none; width: 9px; height: 9px; border-right: 2px solid var(--faint); border-bottom: 2px solid var(--faint); transform: rotate(45deg) translate(-2px, -2px); transition: transform 0.2s; }
+  .faq details[open] summary::after { transform: rotate(225deg) translate(-2px, -2px); }
+  .faq details p { margin: 0 4px 18px; color: var(--muted); font-size: 15.5px; line-height: 1.6; max-width: 62ch; }
+  .faq a { color: var(--accent); text-decoration: none; }
+  .share { margin: 14px 0 0; padding: 16px; border-radius: 20px; background: var(--surface); border: 1px solid var(--stroke); max-width: 440px; }
+  .share .spot { color: var(--text); margin: 0 0 4px; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .share p { margin: 0 0 12px; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+  .share .row { display: flex; gap: 8px; }
+  .share code { flex: 1; min-width: 0; display: flex; align-items: center; padding: 0 14px; height: 44px; border-radius: 22px; background: rgba(0,0,0,0.35); border: 1px solid var(--stroke); font: 500 14px/1 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--text); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; user-select: all; }
+  .share button { flex: none; height: 44px; padding: 0 18px; border-radius: 22px; border: 0; background: var(--accent); color: var(--accent-ink); font: inherit; font-size: 15px; font-weight: 650; cursor: pointer; }
   footer { border-top: 1px solid var(--stroke); padding: 26px 0 40px; display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--faint); font-size: 13px; }
   footer a { color: var(--muted); text-decoration: none; }
   footer a:hover { color: var(--text); }
@@ -282,6 +302,11 @@
         </form>
         <p class="note" id="note" role="status">For iPhone. We'll only email you about Rook.</p>
         <p class="count" id="count" hidden><b></b> people are already waiting.</p>
+        <div class="share" id="share" hidden>
+          <p class="spot">You're #<span id="spot"></span> in line.</p>
+          <p>Want in sooner? Every friend who joins with your link moves you up 25 spots.</p>
+          <div class="row"><code id="link"></code><button type="button" id="copy">Share</button></div>
+        </div>
       </div>
       <div class="stage"><div class="glow" aria-hidden="true"></div>
         <div>
@@ -423,6 +448,17 @@
       <figure class="reveal"><div class="phone mini"><div class="screen"><div class="app"><div class="ui still"><div class="sb"><b>9:41</b><span><svg viewBox="0 0 20 12" width="19" height="12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3.2" height="4" rx="1"/><rect x="5.4" y="5.5" width="3.2" height="6.5" rx="1"/><rect x="10.8" y="3" width="3.2" height="9" rx="1"/><rect x="16.2" y="0" width="3.2" height="12" rx="1"/></svg><svg viewBox="0 0 18 13" width="17" height="12" fill="currentColor" aria-hidden="true"><path d="M9 2.2c2.6 0 5 1 6.8 2.7l1.3-1.4C14.9 1.4 12 .2 9 .2S3.1 1.4.9 3.5l1.3 1.4C4 3.2 6.4 2.2 9 2.2zm0 4c1.5 0 2.9.6 4 1.5l1.3-1.4A7.9 7.9 0 0 0 9 4.2c-2 0-3.9.8-5.3 2.1L5 7.7c1.1-.9 2.5-1.5 4-1.5zm0 4c.6 0 1.1.2 1.5.6L9 12.4l-1.5-1.6c.4-.4.9-.6 1.5-.6z"/></svg><i class="batt"><i></i></i></span></div><p class="me">at the store, what do I need for the pho?</p><p class="ans">From <b>Weeknight Beef Pho</b> by kitchenbyleo, for 4 bowls:</p><ul class="group ask"><li><i></i><span>Beef broth</span><em>8 cups</em></li><li><i></i><span>Rice noodles</span><em>14 oz</em></li><li><i></i><span>Sirloin</span><em>½ lb</em></li><li><i></i><span>Star anise</span><em>3</em></li><li><i></i><span>Thai basil, lime</span><em>1 each</em></li></ul><p class="me">anything coming up this week?</p><p class="ans">Two things from your saves:</p><div class="acard"><span class="cv" style="background:#111 url(img/tower.jpg) center/cover"></span><div><b>Seafood Tower Thursdays</b><em>Last one Thursday · 6 PM</em><span class="l">Book ahead, walk-ins wait an hour</span></div></div><div class="acard"><span class="cv" style="background:#111 url(img/garden.jpg) center/cover"></span><div><b>Free Garden Day</b><em>This Sunday · 10 AM</em><span class="l">Free tickets drop Friday at 9 AM</span></div></div><p class="ans">Want reminders for both?</p><div class="composer">Ask about your saves</div></div></div></div></div><figcaption><h3>Ask anything. Miss nothing.</h3><p>Ask "what do I need for that pho?" and get a shopping list, or "anything coming up?" and see what's happening before you miss it.</p></figcaption></figure>
     </section>
 
+    <section class="faq reveal" id="faq" aria-label="Questions">
+      <h2>Questions</h2>
+      <details data-q="free"><summary>Is Rook free?</summary><p>Saving, your library and playing your saves are free. Free accounts also get a set number of AI breakdowns and Ask questions each month. Rook Pro unlocks more for people who save a lot.</p></details>
+      <details data-q="apps"><summary>Which apps does it work with?</summary><p>TikTok, Instagram (Reels, posts and carousels) and YouTube (videos and Shorts).</p></details>
+      <details data-q="how"><summary>How do I save something?</summary><p>Tap Share on any TikTok, Reel or YouTube video and pick Rook, or paste the link into the app. Rook breaks it down in the background, so it's ready when you open it.</p></details>
+      <details data-q="videos"><summary>Does Rook download or repost videos?</summary><p>No. Rook never stores the video. Your saves play from the original post, with the creator credited and a link back to it.</p></details>
+      <details data-q="android"><summary>Is there an Android version?</summary><p>Not yet. Rook is iPhone only for now. Join the list and we'll tell you if that changes.</p></details>
+      <details data-q="data"><summary>What happens to my data?</summary><p>Your saves are private to you, we never sell your data, and you can delete your account and everything in it at any time. The details are in our <a href="privacy.html">privacy policy</a>.</p></details>
+      <details data-q="when"><summary>When do I get in?</summary><p>We're sending invites in waves, in the order people joined. After you join you get a link: every friend who signs up with it moves you up 25 spots.</p></details>
+    </section>
+
     <section class="again reveal">
       <h2>The first wave is small. Get in it.</h2>
       <p class="sub">We're letting people in a few hundred at a time, in the order they joined. The earlier you're on the list, the sooner your invite comes.</p>
@@ -432,7 +468,7 @@
     <p class="source">* The Harris Poll for Instacart, 2022, 2,086 U.S. adults.</p>
     <footer>
       <span>© 2026 Rook</span>
-      <a href="https://dhemzz.github.io/rook-player/privacy.html">Privacy</a>
+      <a href="privacy.html">Privacy</a>
       <a href="https://www.tiktok.com/@withrook">TikTok</a>
       <a href="https://www.instagram.com/withrook.app">Instagram</a>
       <a href="mailto:hello@withrook.app">hello@withrook.app</a>
@@ -447,11 +483,71 @@
     var button = form.querySelector("button");
     var params = new URLSearchParams(location.search);
     var ref = params.get("ref") || params.get("utm_source") || "";
+    var invitedBy = params.get("r") || "";
+
+    // Page stats, first-party: a random id for this tab only, no cookies. Batches go out with sendBeacon.
+    var STATS = "https://njgziheshhfixdevawte.supabase.co/functions/v1/site-events";
+    var sid = Math.random().toString(36).slice(2, 12) + Date.now().toString(36);
+    var queue = [], sentView = false, started = Date.now();
+    function track(e, l, v) {
+      queue.push({ e: e, l: l || undefined, v: typeof v === "number" ? v : undefined });
+      if (queue.length >= 20) flush();
+    }
+    function flush() {
+      if (!queue.length) return;
+      var body = { sid: sid, events: queue.splice(0, 40), w: window.innerWidth };
+      if (!sentView) {
+        sentView = true;
+        body.ref = ref || (invitedBy ? "friend" : "");
+        body.referrer = document.referrer;
+        body.lang = navigator.language;
+        ["utm_medium", "utm_campaign", "utm_content"].forEach(function (k) { if (params.get(k)) body[k] = params.get(k); });
+      }
+      var data = JSON.stringify(body);
+      try {
+        if (navigator.sendBeacon && navigator.sendBeacon(STATS, new Blob([data], { type: "text/plain" }))) return;
+      } catch (e) {}
+      fetch(STATS, { method: "POST", body: data, keepalive: true, headers: { "content-type": "text/plain" } }).catch(function () {});
+    }
+    track("view", location.pathname);
+    setInterval(flush, 5000);
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "hidden") { track("leave", null, Math.round((Date.now() - started) / 1000)); flush(); }
+    });
+    var deepest = 0;
+    window.addEventListener("scroll", function () {
+      var doc = document.documentElement;
+      var pct = Math.floor(((window.scrollY + window.innerHeight) / doc.scrollHeight) * 4) * 25;
+      if (pct > deepest) { deepest = pct; track("scroll", null, pct); }
+    }, { passive: true });
+    if (window.IntersectionObserver) {
+      var seenBy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          track("seen", entry.target.getAttribute("data-seen"));
+          seenBy.unobserve(entry.target);
+        });
+      }, { threshold: 0.4 });
+      [[".results", "stat"], [".trio", "phones"], [".faq", "faq"], [".again", "final_cta"]].forEach(function (pair) {
+        var el = document.querySelector(pair[0]);
+        if (el) { el.setAttribute("data-seen", pair[1]); seenBy.observe(el); }
+      });
+    }
+    document.querySelectorAll(".faq details").forEach(function (d) {
+      d.addEventListener("toggle", function () { if (d.open) track("faq", d.getAttribute("data-q")); });
+    });
+    document.querySelectorAll("footer a").forEach(function (a) {
+      a.addEventListener("click", function () { track("out", a.textContent.trim()); flush(); });
+    });
+    var cta = document.querySelector(".again .cta");
+    if (cta) cta.addEventListener("click", function () { track("cta"); });
+    form.email.addEventListener("focus", function () { track("focus"); }, { once: true });
 
     // The example breakdowns: pick an example, switch its tabs, tick a line, tap a step to "jump" the video.
     document.querySelectorAll(".chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
         document.querySelectorAll(".chip").forEach(function (c) { c.classList.toggle("on", c === chip); });
+        track("chip", chip.getAttribute("data-show"));
         document.querySelectorAll(".app").forEach(function (app) {
           app.hidden = app.getAttribute("data-example") !== chip.getAttribute("data-show");
           settle(app);
@@ -463,6 +559,7 @@
       var seek = app.querySelector(".seek");
       tabs.forEach(function (tab) {
         tab.addEventListener("click", function () {
+          track("tab", app.getAttribute("data-example") + ":" + tab.textContent.trim());
           tabs.forEach(function (t) {
             var on = t === tab;
             t.classList.toggle("on", on);
@@ -474,12 +571,13 @@
         });
       });
       app.querySelectorAll(".group:not(.plain) li").forEach(function (li) {
-        li.addEventListener("click", function () { li.classList.toggle("done"); });
+        li.addEventListener("click", function () { li.classList.toggle("done"); track("tick", app.getAttribute("data-example")); });
       });
       var steps = app.querySelectorAll(".nsteps li, .secs li");
       steps.forEach(function (li) {
         li.addEventListener("click", function () {
           steps.forEach(function (other) { other.classList.toggle("now", other === li); });
+          track("step", app.getAttribute("data-example"));
           seek.textContent = "▶ " + li.getAttribute("data-t");
           seek.hidden = false;
         });
@@ -553,26 +651,63 @@
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       var email = form.email.value.trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { say("That email doesn't look right.", "err"); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { say("That email doesn't look right.", "err"); track("error", "email"); return; }
       button.disabled = true; say("Adding you…");
+      track("submit"); flush();
       fetch(ENDPOINT, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email: email, ref: ref, referrer: document.referrer, company: form.company.value })
+        body: JSON.stringify({ email: email, ref: ref, r: invitedBy, referrer: document.referrer, company: form.company.value })
       }).then(function (response) {
         if (response.ok) {
-          form.reset();
-          say("You're on the list. We'll email you when your spot opens.", "ok");
-          button.textContent = "You're in";
-          return;
+          return response.json().catch(function () { return {}; }).then(function (data) {
+            form.reset();
+            button.textContent = "You're in";
+            track("joined", null, data.position || undefined); flush();
+            if (data.position && data.code) {
+              say("You're on the list. We'll email you when your spot opens.", "ok");
+              showShare(data.position, data.code);
+            } else {
+              say("You're on the list. We'll email you when your spot opens.", "ok");
+            }
+          });
         }
         button.disabled = false;
         say(response.status === 400 ? "That email doesn't look right." : "Something went wrong. Try again in a minute.", "err");
+        track("error", String(response.status));
       }).catch(function () {
         button.disabled = false;
         say("Something went wrong. Try again in a minute.", "err");
+        track("error", "network");
       });
     });
+
+    // After a new signup: their spot in line and a link that moves them up when friends join.
+    function showShare(position, code) {
+      var link = "https://withrook.app/?r=" + code;
+      document.getElementById("spot").textContent = position.toLocaleString("en-US");
+      document.getElementById("link").textContent = link.replace("https://", "");
+      var share = document.getElementById("share");
+      var copy = document.getElementById("copy");
+      share.hidden = false;
+      copy.addEventListener("click", function () {
+        var text = "I'm on the list for Rook, an app that turns saved TikToks, Reels and YouTube videos into steps and lists you can actually use. Join with my link:";
+        if (navigator.share) {
+          navigator.share({ title: "Rook", text: text, url: link }).then(function () { track("share", "sheet"); }).catch(function () {});
+          return;
+        }
+        navigator.clipboard.writeText(link).then(function () {
+          copy.textContent = "Copied";
+          track("share", "copy");
+          setTimeout(function () { copy.textContent = "Share"; }, 2000);
+        }).catch(function () {
+          var range = document.createRange();
+          range.selectNodeContents(document.getElementById("link"));
+          var selection = window.getSelection();
+          selection.removeAllRanges(); selection.addRange(range);
+        });
+      });
+    }
   })();
 </script>
 </body>
