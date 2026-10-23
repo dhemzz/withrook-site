@@ -303,8 +303,8 @@
         <p class="note" id="note" role="status">For iPhone. We'll only email you about Rook.</p>
         <p class="count" id="count" hidden><b></b> people are already waiting.</p>
         <div class="share" id="share" hidden>
-          <p class="spot">You're #<span id="spot"></span> in line.</p>
-          <p>Want in sooner? Every friend who joins with your link moves you up 25 spots.</p>
+          <p class="spot" id="spot">You're in Wave 1.</p>
+          <p>Want in sooner? Every friend who joins with your link moves you up 25 spots in line.</p>
           <div class="row"><code id="link"></code><button type="button" id="copy">Share</button></div>
         </div>
       </div>
@@ -483,7 +483,10 @@
     var button = form.querySelector("button");
     var params = new URLSearchParams(location.search);
     var ref = params.get("ref") || params.get("utm_source") || "";
-    var invitedBy = params.get("r") || "";
+    // ?r=CODE is a friend's link. The welcome email's Share button adds &s=1 and opens the owner's own share card.
+    var fromEmail = params.get("s") === "1" && /^[a-z0-9]{7}$/i.test(params.get("r") || "");
+    var invitedBy = fromEmail ? "" : (params.get("r") || "");
+    if (fromEmail) ref = "email";
 
     // Page stats, first-party: a random id for this tab only, no cookies. Batches go out with sendBeacon.
     var STATS = "https://njgziheshhfixdevawte.supabase.co/functions/v1/site-events";
@@ -663,12 +666,12 @@
           return response.json().catch(function () { return {}; }).then(function (data) {
             form.reset();
             button.textContent = "You're in";
-            track("joined", null, data.position || undefined); flush();
-            if (data.position && data.code) {
-              say("You're on the list. We'll email you when your spot opens.", "ok");
-              showShare(data.position, data.code);
+            track("joined", null, data.wave || undefined); flush();
+            if (data.wave && data.code) {
+              say("You're on the list. We'll email you when your wave opens.", "ok");
+              showShare(data.wave, data.code);
             } else {
-              say("You're on the list. We'll email you when your spot opens.", "ok");
+              say("You're on the list. We'll email you when your wave opens.", "ok");
             }
           });
         }
@@ -682,10 +685,10 @@
       });
     });
 
-    // After a new signup: their spot in line and a link that moves them up when friends join.
-    function showShare(position, code) {
+    // After a new signup (or from the email's Share button): their wave and a link that moves them up.
+    function showShare(wave, code) {
       var link = "https://withrook.app/?r=" + code;
-      document.getElementById("spot").textContent = position.toLocaleString("en-US");
+      document.getElementById("spot").textContent = wave ? "You're in Wave " + wave + "." : "Share your Rook link.";
       document.getElementById("link").textContent = link.replace("https://", "");
       var share = document.getElementById("share");
       var copy = document.getElementById("copy");
@@ -707,6 +710,11 @@
           selection.removeAllRanges(); selection.addRange(range);
         });
       });
+    }
+    if (fromEmail) {
+      showShare(null, params.get("r").toLowerCase());
+      form.hidden = true;
+      note.hidden = true;
     }
   })();
 </script>
