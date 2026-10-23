@@ -158,6 +158,7 @@
   .chipx { font-size: 12.5px; padding: 5px 10px; border-radius: 13px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
   .stage > div { display: flex; flex-direction: column; align-items: center; }
   .chips { display: flex; justify-content: center; gap: 6px; margin: 0 0 16px; flex-wrap: wrap; }
+  @media (max-width: 480px) { .chips { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; max-width: calc(100vw - 32px); padding-bottom: 2px; } .chips::-webkit-scrollbar { display: none; } .chips .chip { flex: none; padding: 0 10px; font-size: 12.5px; } .chips { gap: 5px; } }
   .chip { width: auto; height: 32px; padding: 0 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--stroke); color: var(--muted); font-size: 13px; font-weight: 600; }
   .chip.on { background: rgba(255,255,255,0.14); color: var(--text); border-color: rgba(255,255,255,0.22); }
   .try { text-align: center; margin: 16px 0 0; font-size: 13px; color: var(--faint); }
