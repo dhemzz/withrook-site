@@ -100,8 +100,25 @@
   .pane[hidden] { display: none; }
   .stat { margin: 0 0 14px; font-size: 15px; }
   .gist { margin: 0 0 18px; font-size: 15.5px; line-height: 1.5; color: rgba(255,255,255,0.85); }
-  .point { margin: 0 0 14px; padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,0.07); font-size: 15px; line-height: 1.4; }
-  .point span { display: block; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); font-weight: 650; margin-bottom: 4px; }
+  .point { margin: 0 0 18px; font-size: 18px; font-weight: 650; line-height: 1.35; }
+  .point span { display: block; font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 600; margin-bottom: 6px; }
+  .facts { display: grid; grid-template-columns: 40% 1fr; gap: 8px 12px; margin: 0 0 18px; font-size: 15px; line-height: 1.35; }
+  .facts dt { color: rgba(255,255,255,0.55); }
+  .facts dd { margin: 0; }
+  .bul { margin: 0; padding: 0 0 0 18px; font-size: 15px; line-height: 1.4; color: rgba(255,255,255,0.75); display: grid; gap: 10px; }
+  .bul li::marker { color: rgba(255,255,255,0.45); }
+  .sub2 { margin: -6px 0 14px; font-size: 14.5px; color: rgba(255,255,255,0.55); line-height: 1.4; }
+  .eqlabel { margin: 0 0 4px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); }
+  .eq { margin: 0; font-size: 16px; color: rgba(255,255,255,0.7); }
+  .nsteps small { display: block; margin-top: 4px; font-size: 13.5px; color: rgba(255,255,255,0.55); }
+  .secs { list-style: none; margin: 0; padding: 0; }
+  .secs li { padding: 14px 4px; border-bottom: 1px solid rgba(255,255,255,0.1); cursor: pointer; border-radius: 12px; }
+  .secs .hd { display: flex; gap: 10px; align-items: flex-start; }
+  .secs h4 { flex: 1; margin: 0 0 4px; font-size: 15.5px; font-weight: 650; line-height: 1.3; }
+  .secs p { margin: 0 0 3px; font-size: 14px; line-height: 1.4; color: rgba(255,255,255,0.55); }
+  .secs .ts { color: rgba(255,255,255,0.55); font-size: 13px; white-space: nowrap; padding-top: 2px; }
+  .secs li.now { background: rgba(255,107,74,0.12); }
+  .secs li.now .ts { color: var(--accent); font-weight: 650; }
   .glabel { margin: 0 0 8px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); }
   .group { list-style: none; margin: 0 0 18px; padding: 0 0 0 14px; border-radius: 20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); }
   .group li { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 6px 14px 6px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 15px; cursor: pointer; user-select: none; }
@@ -183,6 +200,7 @@
           <button type="button" class="chip on" data-show="recipe">Recipe</button>
           <button type="button" class="chip" data-show="places">Places</button>
           <button type="button" class="chip" data-show="workout">Workout</button>
+          <button type="button" class="chip" data-show="event">Event</button>
           <button type="button" class="chip" data-show="explainer">Explainer</button>
         </div>
         <div class="phone">
@@ -193,7 +211,7 @@
                 <div class="bar"><i></i></div>
                 <div class="who"><span class="av">K</span><b>kitchenbyleo</b></div>
                 <p class="ttl">Honey Garlic Chicken Thighs</p>
-                <div class="meta"><span>3 wk. ago</span><span class="dotsep">·</span><span class="cat">▭ Recipes ✦</span></div>
+                <div class="meta"><span>3 wk. ago</span></div>
                 <div class="acts"><span class="open">Open post</span><span class="rem">🔔 Remind me</span><span class="circ">＋</span><span class="circ">•••</span></div>
                 <p class="addnote">✎ Add note</p>
                 <div class="tabs" role="tablist">
@@ -216,7 +234,7 @@
                 <div class="bar"><i></i></div>
                 <div class="who"><span class="av">C</span><b>cdmx.eats</b></div>
                 <p class="ttl">Mexico City Taco Crawl</p>
-                <div class="meta"><span>1 wk. ago</span><span class="dotsep">·</span><span class="cat">▭ Places ✦</span></div>
+                <div class="meta"><span>1 wk. ago</span></div>
                 <div class="acts"><span class="open">Open post</span><span class="rem">🔔 Remind me</span><span class="circ">＋</span><span class="circ">•••</span></div>
                 <p class="addnote">✎ Add note</p>
                 <div class="tabs" role="tablist">
@@ -237,9 +255,9 @@
               <div class="ui">
                 <div class="video" style="background:linear-gradient(170deg,#2d3f66,#172236 50%,#0b1019)"><span class="seek" hidden></span><div class="vbtns"><span>🔊</span><span>❚❚</span></div></div>
                 <div class="bar"><i></i></div>
-                <div class="who"><span class="av">M</span><b>coachmara</b></div>
-                <p class="ttl">20-Minute Dumbbell Legs</p>
-                <div class="meta"><span>5 days ago</span><span class="dotsep">·</span><span class="cat">▭ Fitness ✦</span></div>
+                <div class="who"><span class="av">K</span><b>kb.withsam</b></div>
+                <p class="ttl">Full Body Kettlebell Complex</p>
+                <div class="meta"><span>2 wk. ago</span></div>
                 <div class="acts"><span class="open">Open post</span><span class="rem">🔔 Remind me</span><span class="circ">＋</span><span class="circ">•••</span></div>
                 <p class="addnote">✎ Add note</p>
                 <div class="tabs" role="tablist">
@@ -247,22 +265,20 @@
                   <button type="button" role="tab" class="tab" data-tab="second" aria-selected="false">Workout</button>
                 </div>
                 <div class="pane" data-pane="overview">
-                  <p class="stat">🕘 20 min <span class="dotsep">·</span> 🔁 3 rounds</p>
-                  <p class="gist">Mara runs a no-jump leg session with two dumbbells: three rounds, 40 seconds on and 20 off.</p>
-                  <p class="glabel">What you need</p><ul class="group plain"><li><span>Dumbbells</span><em>2</em></li><li><span>Mat</span><em>1</em></li></ul>
+                  <p class="stat">🏋 4 moves</p><p class="sub2">5 rounds, 90 sec rest between rounds, all four moves = 1 round</p><p class="gist">One kettlebell, four moves back to back: swings, goblet squats, presses and rows for a full-body session at home.</p><p class="eqlabel">Equipment</p><p class="eq">Kettlebell</p>
                 </div>
                 <div class="pane" data-pane="second" hidden>
-                  <ol class="nsteps"><li data-t="0:41"><b>1</b><div><p>Goblet squat, chest up, sit between your heels.</p><div class=chiprow><span class="chipx">12 reps</span></div></div><span class="ts">▶ 0:41</span></li><li data-t="2:10"><b>2</b><div><p>Romanian deadlift, soft knees, hinge at the hips.</p><div class=chiprow><span class="chipx">10 reps</span></div></div><span class="ts">▶ 2:10</span></li><li data-t="3:35"><b>3</b><div><p>Reverse lunge, alternating legs.</p><div class=chiprow><span class="chipx">10 each side</span></div></div><span class="ts">▶ 3:35</span></li><li data-t="5:02"><b>4</b><div><p>Calf raise with a pause at the top.</p><div class=chiprow><span class="chipx">15 reps</span></div></div><span class="ts">▶ 5:02</span></li></ol>
+                  <ol class="nsteps"><li data-t="0:04"><b>1</b><div><p>Kettlebell swing</p><small>5 × 10 · Rest 90 sec</small></div><span class="ts">▶ 0:04</span></li><li data-t="0:11"><b>2</b><div><p>Goblet squat</p><small>5 × 8 · Rest 90 sec</small></div><span class="ts">▶ 0:11</span></li><li data-t="0:18"><b>3</b><div><p>Single arm press</p><small>5 × 6 each side · Rest 90 sec</small></div><span class="ts">▶ 0:18</span></li><li data-t="0:26"><b>4</b><div><p>Bent-over row</p><small>5 × 8 each side · Rest 90 sec</small></div><span class="ts">▶ 0:26</span></li></ol>
                 </div>
               </div>
             </div>
-            <div class="app" data-example="explainer" hidden>
+            <div class="app" data-example="event" hidden>
               <div class="ui">
-                <div class="video" style="background:linear-gradient(170deg,#4b3266,#241835 50%,#120c1b)"><span class="seek" hidden></span><div class="vbtns"><span>🔊</span><span>❚❚</span></div></div>
+                <div class="video" style="background:linear-gradient(170deg,#6b2f4a,#341726 50%,#170a11)"><span class="seek" hidden></span><div class="vbtns"><span>🔊</span><span>❚❚</span></div></div>
                 <div class="bar"><i></i></div>
-                <div class="who"><span class="av">F</span><b>flightnerd</b></div>
-                <p class="ttl">Why Plane Tickets Cost What They Do</p>
-                <div class="meta"><span>2 wk. ago</span><span class="dotsep">·</span><span class="cat">▭ Learn ✦</span></div>
+                <div class="who"><span class="av">R</span><b>la.after.dark</b></div>
+                <p class="ttl">Rooftop Movie Nights Are Back</p>
+                <div class="meta"><span>4 days ago</span></div>
                 <div class="acts"><span class="open">Open post</span><span class="rem">🔔 Remind me</span><span class="circ">＋</span><span class="circ">•••</span></div>
                 <p class="addnote">✎ Add note</p>
                 <div class="tabs" role="tablist">
@@ -270,12 +286,31 @@
                   <button type="button" role="tab" class="tab" data-tab="second" aria-selected="false">Sections</button>
                 </div>
                 <div class="pane" data-pane="overview">
-                  <p class="stat">🕘 14 min <span class="dotsep">·</span> 📑 4 sections</p>
-                  <div class="point"><span>The point</span>Fares follow demand and how full the plane is, not the distance you fly.</div><p class="gist">A former airline analyst explains how fares are really set, and why the same seat changes price all week.</p>
-                  <p class="glabel">Key ideas</p><ul class="group plain"><li><span>Seats are sold in price buckets</span><em></em></li><li><span>Cheap buckets close as the plane fills</span><em></em></li><li><span>Booking day matters less than you think</span><em></em></li></ul>
+                  <div class="point"><span>The point</span>Outdoor movies on a downtown rooftop every Saturday, and the last screening of the season is Nov 15.</div><dl class="facts"><dt>When</dt><dd>Saturdays, 8 PM</dd><dt>Last one</dt><dd>Sat, Nov 15</dd><dt>Where</dt><dd>Rooftop, Downtown LA</dd><dt>Tickets</dt><dd>$22, usually gone by Thursday</dd></dl><ul class="bul"><li>Doors open at 7, so get there early for the front loungers</li><li>Headphones are handed out at the door</li><li>The finale is a double feature</li></ul>
                 </div>
                 <div class="pane" data-pane="second" hidden>
-                  <ol class="nsteps"><li data-t="0:00"><b>1</b><div><p>How a fare is set.</p><div class=chiprow><span class="chipx">Demand</span><span class="chipx">Seats left</span></div></div><span class="ts">▶ 0:00</span></li><li data-t="3:12"><b>2</b><div><p>The fare bucket system.</p><div class=chiprow><span class="chipx">Buckets</span></div></div><span class="ts">▶ 3:12</span></li><li data-t="7:40"><b>3</b><div><p>When to actually book.</p><div class=chiprow><span class="chipx">6–8 weeks out</span></div></div><span class="ts">▶ 7:40</span></li><li data-t="11:05"><b>4</b><div><p>What the apps won't tell you.</p></div><span class="ts">▶ 11:05</span></li></ol>
+                  <ol class="secs"><li data-t="0:02"><div class="hd"><h4>The lineup</h4><span class="ts">▶ 0:02</span></div><p>Classics and cult favorites, one film each Saturday</p></li><li data-t="0:14"><div class="hd"><h4>Getting tickets</h4><span class="ts">▶ 0:14</span></div><p>Tickets drop Monday morning and sell out by Thursday</p><p>Lounger seats cost more but are worth it</p></li><li data-t="0:27"><div class="hd"><h4>What to bring</h4><span class="ts">▶ 0:27</span></div><p>Blanket and a jacket, it gets cold after 9</p><p>Food trucks on site, no outside drinks</p></li></ol>
+                </div>
+              </div>
+            </div>
+            <div class="app" data-example="explainer" hidden>
+              <div class="ui">
+                <div class="video" style="background:linear-gradient(170deg,#1d2b55,#0f1530 50%,#05070f)"><span class="seek" hidden></span><div class="vbtns"><span>🔊</span><span>❚❚</span></div></div>
+                <div class="bar"><i></i></div>
+                <div class="who"><span class="av">A</span><b>astro.anna</b></div>
+                <p class="ttl">How Webb Sees the First Galaxies</p>
+                <div class="meta"><span>1 wk. ago</span></div>
+                <div class="acts"><span class="open">Open post</span><span class="rem">🔔 Remind me</span><span class="circ">＋</span><span class="circ">•••</span></div>
+                <p class="addnote">✎ Add note</p>
+                <div class="tabs" role="tablist">
+                  <button type="button" role="tab" class="tab on" data-tab="overview" aria-selected="true">Overview</button>
+                  <button type="button" role="tab" class="tab" data-tab="second" aria-selected="false">Sections</button>
+                </div>
+                <div class="pane" data-pane="overview">
+                  <div class="point"><span>The point</span>Webb can see galaxies from the early universe because their light has been stretched into infrared on its 13-billion-year trip to us.</div><dl class="facts"><dt>Topics</dt><dd>Redshift; how Webb works</dd><dt>Mirror</dt><dd>6.5 m, 18 gold segments</dd><dt>Distance from Earth</dt><dd>1.5 million km</dd></dl><ul class="bul"><li>Light from far galaxies takes billions of years to arrive, so you see them as they were</li><li>The universe expanding stretches that light into infrared, which our eyes can't see</li><li>A sunshield the size of a tennis court keeps the telescope cold enough to catch faint heat</li></ul>
+                </div>
+                <div class="pane" data-pane="second" hidden>
+                  <ol class="secs"><li data-t="0:03"><div class="hd"><h4>Looking back in time</h4><span class="ts">▶ 0:03</span></div><p>Distant light is old light, so far away also means long ago</p></li><li data-t="0:21"><div class="hd"><h4>Why it has to be infrared</h4><span class="ts">▶ 0:21</span></div><p>Expansion stretches visible light into longer wavelengths</p><p>Hubble mostly sees visible light, Webb is built for infrared</p></li><li data-t="0:44"><div class="hd"><h4>A mirror made of gold</h4><span class="ts">▶ 0:44</span></div><p>18 hexagon segments unfolded in space into one 6.5 m mirror</p></li><li data-t="1:12"><div class="hd"><h4>Parked 1.5 million km out</h4><span class="ts">▶ 1:12</span></div><p>Webb orbits a quiet point beyond the Moon</p><p>The shield blocks the Sun, Earth and Moon at once</p></li></ol>
                 </div>
               </div>
             </div>
@@ -361,7 +396,7 @@
       app.querySelectorAll(".group:not(.plain) li").forEach(function (li) {
         li.addEventListener("click", function () { li.classList.toggle("done"); });
       });
-      var steps = app.querySelectorAll(".nsteps li");
+      var steps = app.querySelectorAll(".nsteps li, .secs li");
       steps.forEach(function (li) {
         li.addEventListener("click", function () {
           steps.forEach(function (other) { other.classList.toggle("now", other === li); });
