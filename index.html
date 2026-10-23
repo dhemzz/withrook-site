@@ -516,8 +516,15 @@
     }
     track("view", location.pathname);
     setInterval(flush, 5000);
+    // Time on page counts only while the tab is showing, so a tab left open in the background doesn't read as hours of interest.
+    var shownMs = 0, shownAt = Date.now();
     document.addEventListener("visibilitychange", function () {
-      if (document.visibilityState === "hidden") { track("leave", null, Math.round((Date.now() - started) / 1000)); flush(); }
+      if (document.visibilityState === "hidden") {
+        if (shownAt) { shownMs += Date.now() - shownAt; shownAt = 0; }
+        track("leave", null, Math.round(shownMs / 1000)); flush();
+      } else if (!shownAt) {
+        shownAt = Date.now();
+      }
     });
     var deepest = 0;
     window.addEventListener("scroll", function () {
