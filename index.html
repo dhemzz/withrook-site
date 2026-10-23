@@ -53,15 +53,18 @@
   h2, .trio h3 { font-family: var(--display); font-weight: 650; text-wrap: balance; }
   h1 em { font-style: normal; color: var(--accent); }
   .lead { font-size: clamp(17px, 2vw, 20px); line-height: 1.5; color: var(--muted); margin: 0 0 30px; max-width: 34ch; }
-  form { display: flex; gap: 10px; max-width: 460px; }
-  input[type=email] {
-    flex: 1; min-width: 0; height: 52px; padding: 0 18px; border-radius: 26px;
+  form { display: flex; flex-wrap: wrap; gap: 10px; max-width: 460px; }
+  form input[name=first] { flex: 1 1 130px; }
+  form input[type=email] { flex: 2 1 200px; }
+  form button { flex: 1 1 100%; }
+  input[type=email], input[name=first] {
+    min-width: 0; height: 52px; padding: 0 18px; border-radius: 26px;
     border: 1px solid var(--stroke); background: var(--surface); color: var(--text);
     font: inherit; font-size: 16px; outline: none;
     -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
   }
-  input[type=email]::placeholder { color: var(--faint); }
-  input[type=email]:focus { border-color: rgba(255,107,74,0.7); }
+  input[type=email]::placeholder, input[name=first]::placeholder { color: var(--faint); }
+  input[type=email]:focus, input[name=first]:focus { border-color: rgba(255,107,74,0.7); }
   button {
     height: 52px; padding: 0 22px; border: 0; border-radius: 26px; cursor: pointer;
     background: var(--accent); color: var(--accent-ink); font: inherit; font-size: 16px; font-weight: 650; white-space: nowrap;
@@ -278,9 +281,7 @@
     .trio { grid-template-columns: 1fr; gap: 48px; }
   }
   @media (max-width: 420px) {
-    form { flex-direction: column; }
-    input[type=email] { flex: none; width: 100%; }
-    form button { width: 100%; }
+    form input[name=first], form input[type=email] { flex: 1 1 100%; }
   }
 </style>
 </head>
@@ -296,6 +297,7 @@
         <h1>The videos<br>you save,<br><em>actually used.</em></h1>
         <p class="lead">Share a TikTok, Reel or YouTube video to Rook. It turns the video into steps, lists and key points, files it for you, and brings it back right when you need it.</p>
         <form id="join" novalidate>
+          <input type="text" name="first" placeholder="First name" autocomplete="given-name" autocapitalize="words" maxlength="40" required aria-label="First name">
           <input type="email" name="email" placeholder="you@email.com" autocomplete="email" inputmode="email" required aria-label="Email">
           <input class="trap" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button type="submit">Get early access</button>
@@ -462,7 +464,7 @@
     <section class="again reveal">
       <h2>The first wave is small. Get in it.</h2>
       <p class="sub">We're letting people in a few hundred at a time, in the order they joined. The earlier you're on the list, the sooner your invite comes.</p>
-      <a class="cta" href="#join" onclick="setTimeout(function(){document.querySelector('#join input[type=email]').focus()},300)">Save my spot</a>
+      <a class="cta" href="#join" onclick="setTimeout(function(){document.querySelector('#join input[name=first]').focus()},300)">Save my spot</a>
     </section>
 
     <p class="source">* The Harris Poll for Instacart, 2022, 2,086 U.S. adults.</p>
@@ -544,7 +546,10 @@
     });
     var cta = document.querySelector(".again .cta");
     if (cta) cta.addEventListener("click", function () { track("cta"); });
-    form.email.addEventListener("focus", function () { track("focus"); }, { once: true });
+    var focused = false;
+    [form.first, form.email].forEach(function (field) {
+      field.addEventListener("focus", function () { if (!focused) { focused = true; track("focus"); } });
+    });
 
     // The example breakdowns: pick an example, switch its tabs, tick a line, tap a step to "jump" the video.
     document.querySelectorAll(".chip").forEach(function (chip) {
@@ -654,13 +659,15 @@
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       var email = form.email.value.trim();
+      var name = form.first.value.trim();
+      if (!name) { say("Add your first name.", "err"); track("error", "name"); form.first.focus(); return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { say("That email doesn't look right.", "err"); track("error", "email"); return; }
       button.disabled = true; say("Adding you…");
       track("submit"); flush();
       fetch(ENDPOINT, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email: email, ref: ref, r: invitedBy, referrer: document.referrer, company: form.company.value })
+        body: JSON.stringify({ name: name, email: email, ref: ref, r: invitedBy, referrer: document.referrer, company: form.company.value })
       }).then(function (response) {
         if (response.ok) {
           return response.json().catch(function () { return {}; }).then(function (data) {
