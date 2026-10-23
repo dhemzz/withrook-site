@@ -357,7 +357,7 @@
 
     <section class="results">
       <h2>Saved for later. Then never again.</h2>
-      <p class="sub">Only 1 in 3 people who save recipes on social media say they often make them.<sup>*</sup> Rook does the work, so yours turn into things you actually do.</p>
+      <p class="sub">Only 1 in 3 people who save recipes on social media say they often cook them.<sup>*</sup> Rook turns every save into something you can use.</p>
     </section>
 
     <section class="trio" aria-label="How Rook works">
@@ -433,13 +433,20 @@
     function fit() {
       document.querySelectorAll(".ui").forEach(function (ui) {
         var screen = ui.closest(".screen");
-        var scale = screen.clientWidth / 390;
+        var width = screen.clientWidth, height = screen.clientHeight;
+        if (!width || !height) return; // not laid out yet; the observer calls again once it is
+        var scale = width / 390;
         ui.style.transform = "scale(" + scale + ")";
-        ui.style.height = (screen.clientHeight / scale) + "px";
+        ui.style.height = (height / scale) + "px";
       });
     }
     fit();
     window.addEventListener("resize", fit);
+    window.addEventListener("load", fit);
+    if (window.ResizeObserver) {
+      var observer = new ResizeObserver(function () { fit(); });
+      document.querySelectorAll(".screen").forEach(function (screen) { observer.observe(screen); });
+    }
     // Each example opens scrolled to its breakdown, like the app's post page after a small scroll.
     function settle(app) {
       if (app.hidden || app.getAttribute("data-settled")) return;
