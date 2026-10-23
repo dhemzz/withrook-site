@@ -148,6 +148,8 @@
   .results { padding: 0 0 28px; }
   .results h2 { font-size: clamp(24px, 3.4vw, 34px); letter-spacing: -0.025em; margin: 0 0 6px; }
   .results p.sub { color: var(--muted); margin: 0 0 22px; font-size: 16px; }
+  .results sup { color: var(--faint); font-size: 11px; }
+  .source { margin: 0 0 12px; color: var(--faint); font-size: 12px; }
   .again { text-align: center; padding: 10px 0 80px; }
   .again h2 { font-size: clamp(26px, 3.6vw, 36px); letter-spacing: -0.025em; margin: 0 0 8px; }
   .again .sub { color: var(--muted); margin: 0 auto 24px; max-width: 40ch; font-size: 16px; }
@@ -322,8 +324,8 @@
     </section>
 
     <section class="results">
-      <h2>Most saved videos are never opened again.</h2>
-      <p class="sub">Rook does the work, so yours turn into things you actually do.</p>
+      <h2>Saved for later. Then never again.</h2>
+      <p class="sub">Only 1 in 3 people who save recipes on social media say they often make them.<sup>*</sup> Rook does the work, so yours turn into things you actually do.</p>
     </section>
 
     <section class="features">
@@ -350,6 +352,7 @@
       <a class="cta" href="#join" onclick="setTimeout(function(){document.querySelector('#join input[type=email]').focus()},300)">Get early access</a>
     </section>
 
+    <p class="source">* The Harris Poll for Instacart, 2022, 2,086 U.S. adults.</p>
     <footer>
       <span>© 2026 Rook</span>
       <a href="https://dhemzz.github.io/rook-player/privacy.html">Privacy</a>
