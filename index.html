@@ -70,49 +70,62 @@
   .screen { width: 100%; height: 100%; border-radius: 35px; overflow: hidden; background: #000; display: grid; place-items: center; }
   .screen video { width: 100%; height: 100%; object-fit: cover; display: block; }
   .screen img { width: 58%; border-radius: 22%; }
-  .app { width: 100%; height: 100%; display: flex; flex-direction: column; background: #0B0D10; text-align: left; }
-  .clip {
-    flex: 0 0 30%; position: relative; display: grid; place-items: center;
-    background: linear-gradient(160deg, #6b3a22, #2a1610 55%, #120b09);
-  }
-  .play { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-size: 13px;
-    background: rgba(255,255,255,0.18); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); padding-left: 3px; }
-  .from { position: absolute; left: 12px; bottom: 10px; font-size: 11px; color: rgba(255,255,255,0.8); }
-  .seek { position: absolute; right: 12px; bottom: 9px; font-size: 11px; font-weight: 650; padding: 3px 8px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); }
-  .sheet { flex: 1; padding: 12px 13px 11px; display: flex; flex-direction: column; gap: 3px; overflow: hidden; min-height: 0; }
-  .title { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
-  .by { margin: 0 0 8px; font-size: 11px; color: var(--faint); }
-  .tabs { display: flex; gap: 3px; padding: 3px; border-radius: 16px; background: var(--surface); border: 1px solid var(--stroke); margin-bottom: 8px; }
-  .tab { flex: 1; height: 26px; padding: 0; border-radius: 13px; background: transparent; color: var(--muted); font-size: 11.5px; font-weight: 650; }
-  .tab.on { background: rgba(255,255,255,0.14); color: var(--text); }
-  .pane { display: flex; flex-direction: column; gap: 4px; min-height: 0; }
+  .screen { position: relative; }
+  .app { position: absolute; inset: 0; overflow: hidden; background: #0E0E0E; }
+  .app[hidden] { display: none; }
+  .ui { width: 390px; height: 844px; transform-origin: top left; overflow-y: auto; scrollbar-width: none; padding: 56px 18px 40px; color: #fff; text-align: left; }
+  .ui::-webkit-scrollbar { display: none; }
+  .video { position: relative; width: 210px; height: 360px; margin: 0 auto; border-radius: 22px; }
+  .vbtns { position: absolute; right: 12px; bottom: 12px; display: flex; gap: 8px; }
+  .vbtns span { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; background: rgba(255,255,255,0.2); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  .seek { position: absolute; left: 12px; bottom: 16px; font-size: 13px; font-weight: 650; padding: 5px 10px; border-radius: 12px; background: var(--accent); color: var(--accent-ink); }
+  .bar { width: 210px; height: 3px; margin: 14px auto 22px; border-radius: 2px; background: rgba(255,255,255,0.18); }
+  .bar i { display: block; width: 6%; height: 100%; border-radius: 2px; background: #fff; }
+  .who { display: flex; align-items: center; gap: 10px; font-size: 17px; }
+  .av { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.4); display: grid; place-items: center; font-size: 14px; font-weight: 600; }
+  .ttl { margin: 8px 0 6px; font-size: 21px; font-weight: 650; line-height: 1.2; letter-spacing: -0.01em; }
+  .meta { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.55); font-size: 15px; }
+  .cat { color: #fff; font-weight: 600; padding: 5px 12px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.08); font-size: 14px; }
+  .dotsep { opacity: 0.6; margin: 0 2px; }
+  .acts { display: flex; gap: 9px; margin: 22px 0 18px; align-items: center; }
+  .acts span { flex: none; white-space: nowrap; height: 44px; border-radius: 22px; display: grid; place-items: center; font-size: 15px; font-weight: 600; }
+  .open { padding: 0 20px; background: var(--accent); color: #fff; }
+  .rem { padding: 0 18px; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.12); }
+  .circ { width: 44px; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.12); font-size: 13px !important; }
+  .addnote { margin: 0 0 18px; color: rgba(255,255,255,0.55); font-size: 15px; }
+  .ui .tabs { display: flex; padding: 4px; border-radius: 24px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); margin-bottom: 20px; }
+  .ui .tab { flex: 1; height: 38px; padding: 0; border-radius: 19px; background: transparent; color: rgba(255,255,255,0.55); font-size: 15px; font-weight: 600; }
+  .ui .tab.on { background: rgba(255,255,255,0.16); color: #fff; }
+  .ui .pane { min-height: 600px; }
   .pane[hidden] { display: none; }
-  .stats { display: flex; gap: 6px; }
-  .stats span { flex: 1; padding: 6px 4px; border-radius: 10px; background: var(--surface); text-align: center; font-size: 9.5px; color: var(--faint); line-height: 1.2; }
-  .stats b { display: block; font-size: 14px; color: var(--text); }
-  .gist { margin: 4px 0 2px; font-size: 11.5px; line-height: 1.45; color: var(--muted); }
-  .label { margin: 4px 0 1px; font-size: 11px; color: var(--faint); font-weight: 600; }
-  .label em { font-style: normal; font-weight: 400; opacity: 0.7; }
-  .ticks, .steps { list-style: none; margin: 0; padding: 0; font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
-  .ticks li { cursor: pointer; user-select: none; }
-  .ticks li::before { content: ""; display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.35); margin-right: 8px; vertical-align: -1px; }
-  .ticks li.done { color: var(--faint); text-decoration: line-through; }
-  .ticks li.done::before { background: var(--accent); border-color: var(--accent); }
-  .steps { gap: 6px; }
-  .steps li { cursor: pointer; padding: 7px 9px; border-radius: 11px; background: var(--surface); border: 1px solid transparent; line-height: 1.35; }
-  .steps li.now { border-color: rgba(255,107,74,0.7); color: var(--text); }
-  .steps span { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 8px; font-weight: 650; }
-  .hint { margin: 4px 0 0; font-size: 10.5px; color: var(--faint); }
-  .nudge { margin-top: auto; font-size: 11px; line-height: 1.35; padding: 9px 11px; border-radius: 14px; background: var(--surface); border: 1px solid var(--stroke); color: var(--text); }
+  .stat { margin: 0 0 14px; font-size: 15px; }
+  .gist { margin: 0 0 18px; font-size: 15.5px; line-height: 1.5; color: rgba(255,255,255,0.85); }
+  .point { margin: 0 0 14px; padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,0.07); font-size: 15px; line-height: 1.4; }
+  .point span { display: block; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); font-weight: 650; margin-bottom: 4px; }
+  .glabel { margin: 0 0 8px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); }
+  .group { list-style: none; margin: 0 0 18px; padding: 0 0 0 14px; border-radius: 20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); }
+  .group li { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 6px 14px 6px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 15px; cursor: pointer; user-select: none; }
+  .group li:last-child { border-bottom: 0; }
+  .group i { flex: none; width: 18px; height: 18px; border-radius: 50%; border: 1.6px solid rgba(255,255,255,0.55); }
+  .group span { flex: 1; }
+  .group em { font-style: normal; color: rgba(255,255,255,0.55); font-size: 14px; }
+  .group.plain li { cursor: default; }
+  .group li.done i { background: var(--accent); border-color: var(--accent); }
+  .group li.done span { color: rgba(255,255,255,0.45); text-decoration: line-through; }
+  .nsteps { list-style: none; margin: 0; padding: 0; }
+  .nsteps li { display: flex; gap: 12px; padding: 14px 4px; border-bottom: 1px solid rgba(255,255,255,0.1); cursor: pointer; border-radius: 12px; }
+  .nsteps li > b { color: rgba(255,255,255,0.5); font-weight: 500; font-size: 15px; width: 12px; }
+  .nsteps li > div { flex: 1; }
+  .nsteps p { margin: 0; font-size: 15.5px; line-height: 1.4; }
+  .nsteps .ts { color: rgba(255,255,255,0.55); font-size: 13px; white-space: nowrap; padding-top: 2px; }
+  .nsteps li.now { background: rgba(255,107,74,0.12); }
+  .nsteps li.now .ts { color: var(--accent); font-weight: 650; }
+  .chiprow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+  .chipx { font-size: 12.5px; padding: 5px 10px; border-radius: 13px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
   .stage > div { display: flex; flex-direction: column; align-items: center; }
   .chips { display: flex; justify-content: center; gap: 6px; margin: 0 0 16px; flex-wrap: wrap; }
   .chip { width: auto; height: 32px; padding: 0 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--stroke); color: var(--muted); font-size: 13px; font-weight: 600; }
   .chip.on { background: rgba(255,255,255,0.14); color: var(--text); border-color: rgba(255,255,255,0.22); }
-  .app[hidden] { display: none; }
-  .facts { margin: 0; padding: 0 0 0 16px; font-size: 12px; color: var(--muted); display: grid; gap: 4px; line-height: 1.35; }
-  .facts li::marker { color: var(--accent); }
-  .point { margin: 6px 0 2px; padding: 8px 10px; border-radius: 11px; background: var(--surface); font-size: 11.5px; line-height: 1.4; color: var(--text); }
-  .point span { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); font-weight: 650; margin-bottom: 2px; }
   .try { text-align: center; margin: 16px 0 0; font-size: 13px; color: var(--faint); }
   .try b { color: var(--muted); font-weight: 600; }
   .results { padding: 0 0 28px; }
@@ -175,150 +188,100 @@
         <div class="phone">
           <div class="screen" id="screen">
             <div class="app" data-example="recipe">
-              <div class="clip" style="background:linear-gradient(160deg, #6b3a22, #2a1610 55%, #120b09)">
-                <span class="play">▶</span>
-                <span class="from">Saved from TikTok</span>
-                <span class="seek" hidden></span>
-              </div>
-              <div class="sheet">
-                <p class="title">Honey garlic chicken</p>
-                <p class="by">Recipe · 25 min</p>
+              <div class="ui">
+                <div class="video" style="background:linear-gradient(170deg,#7a4a2c,#3b2416 50%,#1a100a)"><span class="seek" hidden></span><div class="vbtns"><span>🔊</span><span>❚❚</span></div></div>
+                <div class="bar"><i></i></div>
+                <div class="who"><span class="av">K</span><b>kitchenbyleo</b></div>
+                <p class="ttl">Honey Garlic Chicken Thighs</p>
+                <div class="meta"><span>3 wk. ago</span><span class="dotsep">·</span><span class="cat">▭ Recipes ✦</span></div>
+                <div class="acts"><span class="open">Open post</span><span class="rem">🔔 Remind me</span><span class="circ">＋</span><span class="circ">•••</span></div>
+                <p class="addnote">✎ Add note</p>
                 <div class="tabs" role="tablist">
                   <button type="button" role="tab" class="tab on" data-tab="overview" aria-selected="true">Overview</button>
                   <button type="button" role="tab" class="tab" data-tab="second" aria-selected="false">How to make</button>
                 </div>
                 <div class="pane" data-pane="overview">
-                  <div class="stats"><span><b>25</b>min</span><span><b>4</b>servings</span><span><b>7</b>ingredients</span></div>
-                  <p class="gist">Sticky, sweet-savory chicken thighs made in one pan. The glaze is just honey, garlic and soy.</p>
-                  <p class="label">Ingredients <em>tap to tick</em></p>
-                  <ul class="ticks">
-                    <li class="done">4 chicken thighs</li>
-                    <li class="done">3 tbsp honey</li>
-                    <li>4 cloves garlic</li>
-                    <li>2 tbsp soy sauce</li>
-                    <li>Sesame + scallion</li>
-                  </ul>
+                  <p class="stat">👥 4 servings <span class="dotsep">·</span> 🕘 25 min</p>
+                  <p class="gist">Leo pan-sears bone-in chicken thighs and finishes them in a sticky honey garlic glaze, all in one pan.</p>
+                  <p class="glabel">Chicken</p><ul class="group"><li><i></i><span>Bone-in chicken thighs</span><em>~ 2 lb</em></li><li><i></i><span>Salt and pepper</span><em>to taste</em></li></ul><p class="glabel">Glaze</p><ul class="group"><li><i></i><span>Honey</span><em>3 tbsp</em></li><li><i></i><span>Garlic</span><em>4 cloves</em></li><li><i></i><span>Soy sauce</span><em>2 tbsp</em></li></ul>
                 </div>
                 <div class="pane" data-pane="second" hidden>
-                  <ol class="steps">
-                    <li data-t="0:12"><span>0:12</span>Sear the thighs skin-down until golden</li>
-                    <li data-t="0:34"><span>0:34</span>Add garlic, then pour in the glaze</li>
-                    <li data-t="0:51"><span>0:51</span>Simmer until sticky, about 5 min</li>
-                    <li data-t="1:08"><span>1:08</span>Top with sesame and scallion</li>
-                  </ol>
-                  <p class="hint">Tap a line to jump to it in the video.</p>
+                  <ol class="nsteps"><li data-t="0:12"><b>1</b><div><p>Season the thighs and sear skin-down until deep golden.</p><div class=chiprow><span class="chipx">2 lb Bone-in chicken thighs</span></div></div><span class="ts">▶ 0:12</span></li><li data-t="0:34"><b>2</b><div><p>Add the garlic, then pour in the honey and soy.</p><div class=chiprow><span class="chipx">4 cloves Garlic</span><span class="chipx">3 tbsp Honey</span><span class="chipx">2 tbsp Soy sauce</span></div></div><span class="ts">▶ 0:34</span></li><li data-t="0:51"><b>3</b><div><p>Simmer, spooning the glaze over, until sticky.</p></div><span class="ts">▶ 0:51</span></li><li data-t="1:08"><b>4</b><div><p>Rest 5 minutes, then top with sesame and scallion.</p></div><span class="ts">▶ 1:08</span></li></ol>
                 </div>
-                <div class="nudge">🔔 Sun 5 PM · Make this for dinner</div>
               </div>
             </div>
             <div class="app" data-example="places" hidden>
-              <div class="clip" style="background:linear-gradient(160deg, #1f4a3a, #10241d 55%, #0a120f)">
-                <span class="play">▶</span>
-                <span class="from">Saved from Instagram</span>
-                <span class="seek" hidden></span>
-              </div>
-              <div class="sheet">
-                <p class="title">Mexico City taco crawl</p>
-                <p class="by">List · 4 spots</p>
+              <div class="ui">
+                <div class="video" style="background:linear-gradient(170deg,#2c5a46,#163026 50%,#0b1712)"><span class="seek" hidden></span><div class="vbtns"><span>🔊</span><span>❚❚</span></div></div>
+                <div class="bar"><i></i></div>
+                <div class="who"><span class="av">C</span><b>cdmx.eats</b></div>
+                <p class="ttl">Mexico City Taco Crawl</p>
+                <div class="meta"><span>1 wk. ago</span><span class="dotsep">·</span><span class="cat">▭ Places ✦</span></div>
+                <div class="acts"><span class="open">Open post</span><span class="rem">🔔 Remind me</span><span class="circ">＋</span><span class="circ">•••</span></div>
+                <p class="addnote">✎ Add note</p>
                 <div class="tabs" role="tablist">
                   <button type="button" role="tab" class="tab on" data-tab="overview" aria-selected="true">Overview</button>
                   <button type="button" role="tab" class="tab" data-tab="second" aria-selected="false">The list</button>
                 </div>
                 <div class="pane" data-pane="overview">
-                  <div class="stats"><span><b>4</b>spots</span><span><b>3</b>areas</span><span><b>$</b>price</span></div>
-                  <p class="gist">Four taco stands worth the line, from al pastor in Roma to late-night suadero downtown. Most are cash only.</p>
-                  <p class="label">Spots</p>
-                  <ul class="facts">
-                    <li>Al pastor · Roma Norte</li>
-                    <li>Suadero · Centro</li>
-                    <li>Fish tacos · Condesa</li>
-                    <li>Bistec · Narvarte</li>
-                  </ul>
+                  <p class="stat">📍 4 spots <span class="dotsep">·</span> 💵 Cash only</p>
+                  <p class="gist">Four taco stands worth the line, from al pastor off the trompo in Roma to late-night suadero downtown.</p>
+                  <p class="glabel">Spots</p><ul class="group plain"><li><span>Al pastor</span><em>Roma Norte</em></li><li><span>Suadero</span><em>Centro</em></li><li><span>Baja fish tacos</span><em>Condesa</em></li><li><span>Bistec with onions</span><em>Narvarte</em></li></ul>
                 </div>
                 <div class="pane" data-pane="second" hidden>
-                  <ol class="steps">
-                    <li data-t="0:05"><span>0:05</span>Al pastor off the trompo, Roma Norte</li>
-                    <li data-t="0:19"><span>0:19</span>Suadero that runs till 2 AM, Centro</li>
-                    <li data-t="0:33"><span>0:33</span>Baja fish tacos, Condesa</li>
-                    <li data-t="0:47"><span>0:47</span>Bistec with grilled onions, Narvarte</li>
-                  </ol>
-                  <p class="hint">Tap a line to jump to it in the video.</p>
+                  <ol class="nsteps"><li data-t="0:05"><b>1</b><div><p>Al pastor shaved straight off the trompo.</p><div class=chiprow><span class="chipx">Roma Norte</span></div></div><span class="ts">▶ 0:05</span></li><li data-t="0:19"><b>2</b><div><p>Suadero that runs until 2 AM.</p><div class=chiprow><span class="chipx">Centro</span></div></div><span class="ts">▶ 0:19</span></li><li data-t="0:33"><b>3</b><div><p>Crispy Baja fish tacos with cabbage slaw.</p><div class=chiprow><span class="chipx">Condesa</span></div></div><span class="ts">▶ 0:33</span></li><li data-t="0:47"><b>4</b><div><p>Bistec with grilled onions and salsa verde.</p><div class=chiprow><span class="chipx">Narvarte</span></div></div><span class="ts">▶ 0:47</span></li></ol>
                 </div>
-                <div class="nudge">🔔 Sat 1 PM · Taco crawl with Sam</div>
               </div>
             </div>
             <div class="app" data-example="workout" hidden>
-              <div class="clip" style="background:linear-gradient(160deg, #23324f, #121a2b 55%, #0a0e17)">
-                <span class="play">▶</span>
-                <span class="from">Saved from YouTube</span>
-                <span class="seek" hidden></span>
-              </div>
-              <div class="sheet">
-                <p class="title">20-minute dumbbell legs</p>
-                <p class="by">Workout · 20 min</p>
+              <div class="ui">
+                <div class="video" style="background:linear-gradient(170deg,#2d3f66,#172236 50%,#0b1019)"><span class="seek" hidden></span><div class="vbtns"><span>🔊</span><span>❚❚</span></div></div>
+                <div class="bar"><i></i></div>
+                <div class="who"><span class="av">M</span><b>coachmara</b></div>
+                <p class="ttl">20-Minute Dumbbell Legs</p>
+                <div class="meta"><span>5 days ago</span><span class="dotsep">·</span><span class="cat">▭ Fitness ✦</span></div>
+                <div class="acts"><span class="open">Open post</span><span class="rem">🔔 Remind me</span><span class="circ">＋</span><span class="circ">•••</span></div>
+                <p class="addnote">✎ Add note</p>
                 <div class="tabs" role="tablist">
                   <button type="button" role="tab" class="tab on" data-tab="overview" aria-selected="true">Overview</button>
                   <button type="button" role="tab" class="tab" data-tab="second" aria-selected="false">Workout</button>
                 </div>
                 <div class="pane" data-pane="overview">
-                  <div class="stats"><span><b>20</b>min</span><span><b>5</b>moves</span><span><b>3</b>rounds</span></div>
-                  <p class="gist">A no-jump leg session with two dumbbells. Three rounds, 40 seconds on, 20 off.</p>
-                  <p class="label">What you need</p>
-                  <ul class="facts">
-                    <li>Two dumbbells</li>
-                    <li>A mat</li>
-                  </ul>
+                  <p class="stat">🕘 20 min <span class="dotsep">·</span> 🔁 3 rounds</p>
+                  <p class="gist">Mara runs a no-jump leg session with two dumbbells: three rounds, 40 seconds on and 20 off.</p>
+                  <p class="glabel">What you need</p><ul class="group plain"><li><span>Dumbbells</span><em>2</em></li><li><span>Mat</span><em>1</em></li></ul>
                 </div>
                 <div class="pane" data-pane="second" hidden>
-                  <ol class="steps">
-                    <li data-t="0:41"><span>0:41</span>Goblet squat · 12 reps</li>
-                    <li data-t="2:10"><span>2:10</span>Romanian deadlift · 10 reps</li>
-                    <li data-t="3:35"><span>3:35</span>Reverse lunge · 10 each side</li>
-                    <li data-t="5:02"><span>5:02</span>Calf raise · 15 reps</li>
-                  </ol>
-                  <p class="hint">Tap a line to jump to it in the video.</p>
+                  <ol class="nsteps"><li data-t="0:41"><b>1</b><div><p>Goblet squat, chest up, sit between your heels.</p><div class=chiprow><span class="chipx">12 reps</span></div></div><span class="ts">▶ 0:41</span></li><li data-t="2:10"><b>2</b><div><p>Romanian deadlift, soft knees, hinge at the hips.</p><div class=chiprow><span class="chipx">10 reps</span></div></div><span class="ts">▶ 2:10</span></li><li data-t="3:35"><b>3</b><div><p>Reverse lunge, alternating legs.</p><div class=chiprow><span class="chipx">10 each side</span></div></div><span class="ts">▶ 3:35</span></li><li data-t="5:02"><b>4</b><div><p>Calf raise with a pause at the top.</p><div class=chiprow><span class="chipx">15 reps</span></div></div><span class="ts">▶ 5:02</span></li></ol>
                 </div>
-                <div class="nudge">🔔 Tomorrow 7 AM · Leg day</div>
               </div>
             </div>
             <div class="app" data-example="explainer" hidden>
-              <div class="clip" style="background:linear-gradient(160deg, #3d2a52, #1d1428 55%, #100b16)">
-                <span class="play">▶</span>
-                <span class="from">Saved from YouTube</span>
-                <span class="seek" hidden></span>
-              </div>
-              <div class="sheet">
-                <p class="title">Why plane tickets cost what they do</p>
-                <p class="by">Explainer · 14 min</p>
+              <div class="ui">
+                <div class="video" style="background:linear-gradient(170deg,#4b3266,#241835 50%,#120c1b)"><span class="seek" hidden></span><div class="vbtns"><span>🔊</span><span>❚❚</span></div></div>
+                <div class="bar"><i></i></div>
+                <div class="who"><span class="av">F</span><b>flightnerd</b></div>
+                <p class="ttl">Why Plane Tickets Cost What They Do</p>
+                <div class="meta"><span>2 wk. ago</span><span class="dotsep">·</span><span class="cat">▭ Learn ✦</span></div>
+                <div class="acts"><span class="open">Open post</span><span class="rem">🔔 Remind me</span><span class="circ">＋</span><span class="circ">•••</span></div>
+                <p class="addnote">✎ Add note</p>
                 <div class="tabs" role="tablist">
                   <button type="button" role="tab" class="tab on" data-tab="overview" aria-selected="true">Overview</button>
                   <button type="button" role="tab" class="tab" data-tab="second" aria-selected="false">Sections</button>
                 </div>
                 <div class="pane" data-pane="overview">
-                  <div class="stats"><span><b>14</b>min</span><span><b>4</b>sections</span><span><b>3</b>key ideas</span></div>
-                  <p class="point"><span>The point</span>Fares follow demand and how full the plane is, not the distance you fly.</p>
-                  <p class="label">Key ideas</p>
-                  <ul class="facts">
-                    <li>Seats are sold in price "buckets"</li>
-                    <li>Cheaper buckets close as the flight fills</li>
-                    <li>Booking day matters less than you think</li>
-                  </ul>
+                  <p class="stat">🕘 14 min <span class="dotsep">·</span> 📑 4 sections</p>
+                  <div class="point"><span>The point</span>Fares follow demand and how full the plane is, not the distance you fly.</div><p class="gist">A former airline analyst explains how fares are really set, and why the same seat changes price all week.</p>
+                  <p class="glabel">Key ideas</p><ul class="group plain"><li><span>Seats are sold in price buckets</span><em></em></li><li><span>Cheap buckets close as the plane fills</span><em></em></li><li><span>Booking day matters less than you think</span><em></em></li></ul>
                 </div>
                 <div class="pane" data-pane="second" hidden>
-                  <ol class="steps">
-                    <li data-t="0:00"><span>0:00</span>How a fare is set</li>
-                    <li data-t="3:12"><span>3:12</span>The fare bucket system</li>
-                    <li data-t="7:40"><span>7:40</span>When to actually book</li>
-                    <li data-t="11:05"><span>11:05</span>What the apps won't tell you</li>
-                  </ol>
-                  <p class="hint">Tap a line to jump to it in the video.</p>
+                  <ol class="nsteps"><li data-t="0:00"><b>1</b><div><p>How a fare is set.</p><div class=chiprow><span class="chipx">Demand</span><span class="chipx">Seats left</span></div></div><span class="ts">▶ 0:00</span></li><li data-t="3:12"><b>2</b><div><p>The fare bucket system.</p><div class=chiprow><span class="chipx">Buckets</span></div></div><span class="ts">▶ 3:12</span></li><li data-t="7:40"><b>3</b><div><p>When to actually book.</p><div class=chiprow><span class="chipx">6–8 weeks out</span></div></div><span class="ts">▶ 7:40</span></li><li data-t="11:05"><b>4</b><div><p>What the apps won't tell you.</p></div><span class="ts">▶ 11:05</span></li></ol>
                 </div>
-                <div class="nudge">💬 Ask Rook: "when should I book my flight?"</div>
               </div>
             </div>
           </div>
         </div>
-        <p class="try">Real breakdowns, not bookmarks. Try the tabs, then tap a line.</p>
+        <p class="try">Real breakdowns, not bookmarks. Tap the second tab, then a step.</p>
         </div>
       </div>
     </section>
@@ -376,6 +339,7 @@
         document.querySelectorAll(".chip").forEach(function (c) { c.classList.toggle("on", c === chip); });
         document.querySelectorAll(".app").forEach(function (app) {
           app.hidden = app.getAttribute("data-example") !== chip.getAttribute("data-show");
+          settle(app);
         });
       });
     });
@@ -394,10 +358,10 @@
           });
         });
       });
-      app.querySelectorAll(".ticks li").forEach(function (li) {
+      app.querySelectorAll(".group:not(.plain) li").forEach(function (li) {
         li.addEventListener("click", function () { li.classList.toggle("done"); });
       });
-      var steps = app.querySelectorAll(".steps li");
+      var steps = app.querySelectorAll(".nsteps li");
       steps.forEach(function (li) {
         li.addEventListener("click", function () {
           steps.forEach(function (other) { other.classList.toggle("now", other === li); });
@@ -406,6 +370,28 @@
         });
       });
     });
+
+    // The phone screens are drawn at iPhone size (390 wide) and scaled to fit the frame.
+    function fit() {
+      var screen = document.getElementById("screen");
+      var scale = screen.clientWidth / 390;
+      document.querySelectorAll(".ui").forEach(function (ui) {
+        ui.style.transform = "scale(" + scale + ")";
+        ui.style.height = (screen.clientHeight / scale) + "px";
+      });
+    }
+    fit();
+    window.addEventListener("resize", fit);
+    // Each example opens scrolled to its breakdown, like the app's post page after a small scroll.
+    function settle(app) {
+      if (app.hidden || app.getAttribute("data-settled")) return;
+      var ui = app.querySelector(".ui");
+      var who = ui.querySelector(".who");
+      var scale = ui.getBoundingClientRect().width / 390;
+      ui.scrollTop += (who.getBoundingClientRect().top - ui.getBoundingClientRect().top) / scale - 40;
+      app.setAttribute("data-settled", "1");
+    }
+    document.querySelectorAll(".app").forEach(settle);
 
     function say(text, kind) { note.textContent = text; note.className = "note" + (kind ? " " + kind : ""); }
 
