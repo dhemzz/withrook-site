@@ -155,6 +155,37 @@
   .again .sub { color: var(--muted); margin: 0 auto 24px; max-width: 40ch; font-size: 16px; }
   .cta { display: inline-flex; align-items: center; height: 52px; padding: 0 26px; border-radius: 26px; background: var(--accent); color: var(--accent-ink); font-weight: 650; text-decoration: none; }
   html { scroll-behavior: smooth; }
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; padding: 0 0 80px; }
+  .trio figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 18px; min-width: 0; }
+  .trio figcaption { align-self: stretch; }
+  .trio h3 { margin: 0 0 6px; font-size: 17px; font-weight: 650; letter-spacing: -0.01em; }
+  .trio figcaption p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+  .mini { width: min(240px, 70vw); border-radius: 38px; padding: 8px; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+  .mini .screen { border-radius: 31px; }
+  .ui.still { position: relative; padding-top: 58px; overflow: hidden; }
+  .lh { margin: 0 0 12px; font-size: 22px; font-weight: 650; display: flex; justify-content: space-between; align-items: center; }
+  .lh i { font-style: normal; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 16px; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75); }
+  .pills { display: flex; gap: 8px; margin: 0 0 14px; white-space: nowrap; overflow: hidden; }
+  .pills span { flex: none; font-size: 14px; padding: 8px 13px; border-radius: 18px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.75); }
+  .pills b { font-weight: 500; color: rgba(255,255,255,0.45); margin-left: 4px; }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tile { position: relative; aspect-ratio: 3 / 4; border-radius: 20px; overflow: hidden; display: flex; align-items: flex-end; }
+  .tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.82), rgba(0,0,0,0) 55%); }
+  .tile p { position: relative; z-index: 1; margin: 0; padding: 12px; font-size: 14.5px; font-weight: 600; line-height: 1.25; }
+  .tile small { display: block; margin-top: 3px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.6); }
+  .tabbar { position: absolute; z-index: 5; left: 22px; right: 22px; bottom: 26px; height: 62px; border-radius: 31px; display: flex; justify-content: space-around; align-items: center; background: rgba(40,40,42,0.85); border: 1px solid rgba(255,255,255,0.12); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); font-size: 11px; color: rgba(255,255,255,0.55); }
+  .tabbar span { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 16px; border-radius: 24px; }
+  .tabbar span::before { content: attr(data-i); font-size: 19px; line-height: 1; }
+  .tabbar .on { color: var(--accent); background: rgba(255,255,255,0.08); }
+  .me { margin: 0 0 18px auto; width: fit-content; max-width: 78%; padding: 11px 15px; border-radius: 20px; background: rgba(255,255,255,0.14); font-size: 15.5px; }
+  .ans { margin: 0 0 14px; font-size: 15.5px; line-height: 1.45; color: rgba(255,255,255,0.88); }
+  .acard { display: flex; gap: 12px; align-items: center; padding: 10px; margin: 0 0 10px; border-radius: 18px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.08); }
+  .acard .cv { flex: none; width: 52px; height: 68px; border-radius: 12px; }
+  .acard div { min-width: 0; }
+  .acard b { display: block; font-size: 15px; font-weight: 600; line-height: 1.3; }
+  .acard em { display: block; margin-top: 3px; font-style: normal; font-size: 13px; color: var(--accent); font-weight: 600; }
+  .acard span.l { display: block; margin-top: 2px; font-size: 13px; color: rgba(255,255,255,0.5); }
+  .composer { position: absolute; left: 18px; right: 18px; bottom: 102px; height: 50px; border-radius: 25px; padding: 0 18px; display: flex; align-items: center; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.45); font-size: 15.5px; }
   .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 0 0 80px; }
   .card {
     padding: 22px; border-radius: 22px; background: var(--surface); border: 1px solid var(--stroke);
@@ -170,6 +201,7 @@
     .phone { width: min(290px, 78vw); }
     .hero { grid-template-columns: 1fr; gap: 44px; padding: 28px 0 56px; text-align: left; }
     .features { grid-template-columns: 1fr; }
+    .trio { grid-template-columns: 1fr; gap: 48px; }
   }
   @media (max-width: 420px) {
     form { flex-direction: column; }
@@ -328,22 +360,10 @@
       <p class="sub">Only 1 in 3 people who save recipes on social media say they often make them.<sup>*</sup> Rook does the work, so yours turn into things you actually do.</p>
     </section>
 
-    <section class="features">
-      <div class="card">
-        <div class="dot"></div>
-        <h3>Use it</h3>
-        <p>Recipes, workouts, places, how-tos and explainers each get a breakdown that fits, with every step linked to the exact second in the video.</p>
-      </div>
-      <div class="card">
-        <div class="dot"></div>
-        <h3>Don't miss it</h3>
-        <p>Events, releases and trips you saved come back before they happen, not after. "Last one tomorrow · 9 PM."</p>
-      </div>
-      <div class="card">
-        <div class="dot"></div>
-        <h3>Find it in a second</h3>
-        <p>Ask "what was that pasta from last month?" and Rook pulls it up. Mark things done as you go.</p>
-      </div>
+    <section class="trio" aria-label="How Rook works">
+      <figure><div class="phone mini"><div class="screen"><div class="app"><div class="ui still"><p class="lh">Your saves <i>▦ Grid</i></p><div class="pills"><span>Not watched<b>12</b></span><span>This week<b>5</b></span><span>Reminders<b>2</b></span><span>TikTok<b>31</b></span></div><div class="tiles"><div class="tile" style="background:linear-gradient(170deg,#7a4a2c,#3b2416 50%,#1a100a)"><p>Honey Garlic Chicken Thighs<small>kitchenbyleo</small></p></div><div class="tile" style="background:linear-gradient(170deg,#6b2f4a,#341726 50%,#170a11)"><p>Rooftop Movie Nights Are Back<small>la.after.dark</small></p></div><div class="tile" style="background:linear-gradient(170deg,#1d2b55,#0f1530 50%,#05070f)"><p>How Webb Sees the First Galaxies<small>astro.anna</small></p></div><div class="tile" style="background:linear-gradient(170deg,#2c5a46,#163026 50%,#0b1712)"><p>Mexico City Taco Crawl<small>cdmx.eats</small></p></div><div class="tile" style="background:linear-gradient(170deg,#2d3f66,#172236 50%,#0b1019)"><p>Full Body Kettlebell Complex<small>kb.withsam</small></p></div><div class="tile" style="background:linear-gradient(170deg,#6a5a2a,#3a3016 50%,#17130a)"><p>Lisbon in 3 Days<small>slowtravel.jo</small></p></div></div><div class="tabbar"><span data-i="▦" class="on">Library</span><span data-i="❐">Categories</span><span data-i="✦">Ask</span></div></div></div></div></div><figcaption><h3>Everything you save, in one place</h3><p>Share from TikTok, Instagram or YouTube. Rook sorts it, and you can filter by what you haven't watched yet.</p></figcaption></figure>
+      <figure><div class="phone mini"><div class="screen"><div class="app"><div class="ui still"><div class="who"><span class="av">K</span><b>kitchenbyleo</b></div><p class="ttl">Honey Garlic Chicken Thighs</p><div class="meta"><span>3 wk. ago</span></div><div class="acts"><span class="open">Open post</span><span class="rem">🔔 Remind me</span><span class="circ">•••</span></div><div class="tabs"><span class="tab" style="display:grid;place-items:center">Overview</span><span class="tab on" style="display:grid;place-items:center">How to make</span></div><ol class="nsteps"><li><b>1</b><div><p>Season the thighs and sear skin-down until deep golden.</p><div class=chiprow><span class="chipx">2 lb Bone-in chicken thighs</span></div></div><span class="ts">▶ 0:12</span></li><li class="now"><b>2</b><div><p>Add the garlic, then pour in the honey and soy.</p><div class=chiprow><span class="chipx">4 cloves Garlic</span><span class="chipx">3 tbsp Honey</span></div></div><span class="ts">▶ 0:34</span></li><li><b>3</b><div><p>Simmer, spooning the glaze over, until sticky.</p></div><span class="ts">▶ 0:51</span></li><li><b>4</b><div><p>Rest 5 minutes, then top with sesame and scallion.</p></div><span class="ts">▶ 1:08</span></li></ol></div></div></div></div><figcaption><h3>Use it</h3><p>Recipes, workouts, places, events and explainers each get a breakdown that fits, with every step linked to the exact second in the video.</p></figcaption></figure>
+      <figure><div class="phone mini"><div class="screen"><div class="app"><div class="ui still"><p class="me">anything coming up this week?</p><p class="ans">Two things from your saves:</p><div class="acard"><span class="cv" style="background:linear-gradient(170deg,#6b2f4a,#341726 50%,#170a11)"></span><div><b>Rooftop Movie Nights</b><em>Last one Saturday · 8 PM</em><span class="l">Tickets usually gone by Thursday</span></div></div><div class="acard"><span class="cv" style="background:linear-gradient(170deg,#6a5a2a,#3a3016 50%,#17130a)"></span><div><b>The Lanterns, new album</b><em>Out Friday</em><span class="l">From the teaser you saved last month</span></div></div><p class="ans">Want a reminder Thursday morning for the tickets?</p><div class="composer">Ask about your saves</div><div class="tabbar"><span data-i="▦">Library</span><span data-i="❐">Categories</span><span data-i="✦" class="on">Ask</span></div></div></div></div></div><figcaption><h3>Ask, and don't miss it</h3><p>Ask "what was that pasta from last month?" or "anything coming up?" Events and releases you saved come back before they happen.</p></figcaption></figure>
     </section>
 
     <section class="again">
@@ -411,9 +431,9 @@
 
     // The phone screens are drawn at iPhone size (390 wide) and scaled to fit the frame.
     function fit() {
-      var screen = document.getElementById("screen");
-      var scale = screen.clientWidth / 390;
       document.querySelectorAll(".ui").forEach(function (ui) {
+        var screen = ui.closest(".screen");
+        var scale = screen.clientWidth / 390;
         ui.style.transform = "scale(" + scale + ")";
         ui.style.height = (screen.clientHeight / scale) + "px";
       });
