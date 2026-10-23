@@ -104,6 +104,15 @@
   .steps span { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 8px; font-weight: 650; }
   .hint { margin: 4px 0 0; font-size: 10.5px; color: var(--faint); }
   .nudge { margin-top: auto; font-size: 11px; line-height: 1.35; padding: 9px 11px; border-radius: 14px; background: var(--surface); border: 1px solid var(--stroke); color: var(--text); }
+  .stage > div { display: flex; flex-direction: column; align-items: center; }
+  .chips { display: flex; justify-content: center; gap: 6px; margin: 0 0 16px; flex-wrap: wrap; }
+  .chip { width: auto; height: 32px; padding: 0 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--stroke); color: var(--muted); font-size: 13px; font-weight: 600; }
+  .chip.on { background: rgba(255,255,255,0.14); color: var(--text); border-color: rgba(255,255,255,0.22); }
+  .app[hidden] { display: none; }
+  .facts { margin: 0; padding: 0 0 0 16px; font-size: 12px; color: var(--muted); display: grid; gap: 4px; line-height: 1.35; }
+  .facts li::marker { color: var(--accent); }
+  .point { margin: 6px 0 2px; padding: 8px 10px; border-radius: 11px; background: var(--surface); font-size: 11.5px; line-height: 1.4; color: var(--text); }
+  .point span { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); font-weight: 650; margin-bottom: 2px; }
   .try { text-align: center; margin: 16px 0 0; font-size: 13px; color: var(--faint); }
   .try b { color: var(--muted); font-weight: 600; }
   .results { padding: 0 0 28px; }
@@ -133,7 +142,7 @@
   @media (max-width: 420px) {
     form { flex-direction: column; }
     input[type=email] { flex: none; width: 100%; }
-    button { width: 100%; }
+    form button { width: 100%; }
   }
 </style>
 </head>
@@ -147,7 +156,7 @@
     <section class="hero">
       <div>
         <h1>The videos<br>you save,<br><em>actually used.</em></h1>
-        <p class="lead">Share a TikTok, Reel or YouTube video to Rook. It pulls out the recipe, the place or the steps, sorts it for you, and brings it back right when you need it.</p>
+        <p class="lead">Share a TikTok, Reel or YouTube video to Rook. Whatever it is, a recipe, a workout, a place or a deep dive, Rook breaks it down, sorts it, and brings it back right when you need it.</p>
         <form id="join" novalidate>
           <input type="email" name="email" placeholder="you@email.com" autocomplete="email" inputmode="email" required aria-label="Email">
           <input class="trap" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -157,20 +166,26 @@
       </div>
       <div class="stage">
         <div>
+        <div class="chips" role="tablist" aria-label="Example saves">
+          <button type="button" class="chip on" data-show="recipe">Recipe</button>
+          <button type="button" class="chip" data-show="places">Places</button>
+          <button type="button" class="chip" data-show="workout">Workout</button>
+          <button type="button" class="chip" data-show="explainer">Explainer</button>
+        </div>
         <div class="phone">
           <div class="screen" id="screen">
-            <div class="app" aria-label="Example breakdown of a saved recipe video in Rook">
-              <div class="clip">
+            <div class="app" data-example="recipe">
+              <div class="clip" style="background:linear-gradient(160deg, #6b3a22, #2a1610 55%, #120b09)">
                 <span class="play">▶</span>
                 <span class="from">Saved from TikTok</span>
-                <span class="seek" id="seek" hidden></span>
+                <span class="seek" hidden></span>
               </div>
               <div class="sheet">
                 <p class="title">Honey garlic chicken</p>
                 <p class="by">Recipe · 25 min</p>
                 <div class="tabs" role="tablist">
                   <button type="button" role="tab" class="tab on" data-tab="overview" aria-selected="true">Overview</button>
-                  <button type="button" role="tab" class="tab" data-tab="steps" aria-selected="false">How to make</button>
+                  <button type="button" role="tab" class="tab" data-tab="second" aria-selected="false">How to make</button>
                 </div>
                 <div class="pane" data-pane="overview">
                   <div class="stats"><span><b>25</b>min</span><span><b>4</b>servings</span><span><b>7</b>ingredients</span></div>
@@ -184,21 +199,126 @@
                     <li>Sesame + scallion</li>
                   </ul>
                 </div>
-                <div class="pane" data-pane="steps" hidden>
+                <div class="pane" data-pane="second" hidden>
                   <ol class="steps">
                     <li data-t="0:12"><span>0:12</span>Sear the thighs skin-down until golden</li>
                     <li data-t="0:34"><span>0:34</span>Add garlic, then pour in the glaze</li>
                     <li data-t="0:51"><span>0:51</span>Simmer until sticky, about 5 min</li>
                     <li data-t="1:08"><span>1:08</span>Top with sesame and scallion</li>
                   </ol>
-                  <p class="hint">Tap a step to jump to it in the video.</p>
+                  <p class="hint">Tap a line to jump to it in the video.</p>
                 </div>
                 <div class="nudge">🔔 Sun 5 PM · Make this for dinner</div>
               </div>
             </div>
+            <div class="app" data-example="places" hidden>
+              <div class="clip" style="background:linear-gradient(160deg, #1f4a3a, #10241d 55%, #0a120f)">
+                <span class="play">▶</span>
+                <span class="from">Saved from Instagram</span>
+                <span class="seek" hidden></span>
+              </div>
+              <div class="sheet">
+                <p class="title">Mexico City taco crawl</p>
+                <p class="by">List · 4 spots</p>
+                <div class="tabs" role="tablist">
+                  <button type="button" role="tab" class="tab on" data-tab="overview" aria-selected="true">Overview</button>
+                  <button type="button" role="tab" class="tab" data-tab="second" aria-selected="false">The list</button>
+                </div>
+                <div class="pane" data-pane="overview">
+                  <div class="stats"><span><b>4</b>spots</span><span><b>3</b>areas</span><span><b>$</b>price</span></div>
+                  <p class="gist">Four taco stands worth the line, from al pastor in Roma to late-night suadero downtown. Most are cash only.</p>
+                  <p class="label">Spots</p>
+                  <ul class="facts">
+                    <li>Al pastor · Roma Norte</li>
+                    <li>Suadero · Centro</li>
+                    <li>Fish tacos · Condesa</li>
+                    <li>Bistec · Narvarte</li>
+                  </ul>
+                </div>
+                <div class="pane" data-pane="second" hidden>
+                  <ol class="steps">
+                    <li data-t="0:05"><span>0:05</span>Al pastor off the trompo, Roma Norte</li>
+                    <li data-t="0:19"><span>0:19</span>Suadero that runs till 2 AM, Centro</li>
+                    <li data-t="0:33"><span>0:33</span>Baja fish tacos, Condesa</li>
+                    <li data-t="0:47"><span>0:47</span>Bistec with grilled onions, Narvarte</li>
+                  </ol>
+                  <p class="hint">Tap a line to jump to it in the video.</p>
+                </div>
+                <div class="nudge">🔔 Sat 1 PM · Taco crawl with Sam</div>
+              </div>
+            </div>
+            <div class="app" data-example="workout" hidden>
+              <div class="clip" style="background:linear-gradient(160deg, #23324f, #121a2b 55%, #0a0e17)">
+                <span class="play">▶</span>
+                <span class="from">Saved from YouTube</span>
+                <span class="seek" hidden></span>
+              </div>
+              <div class="sheet">
+                <p class="title">20-minute dumbbell legs</p>
+                <p class="by">Workout · 20 min</p>
+                <div class="tabs" role="tablist">
+                  <button type="button" role="tab" class="tab on" data-tab="overview" aria-selected="true">Overview</button>
+                  <button type="button" role="tab" class="tab" data-tab="second" aria-selected="false">Workout</button>
+                </div>
+                <div class="pane" data-pane="overview">
+                  <div class="stats"><span><b>20</b>min</span><span><b>5</b>moves</span><span><b>3</b>rounds</span></div>
+                  <p class="gist">A no-jump leg session with two dumbbells. Three rounds, 40 seconds on, 20 off.</p>
+                  <p class="label">What you need</p>
+                  <ul class="facts">
+                    <li>Two dumbbells</li>
+                    <li>A mat</li>
+                  </ul>
+                </div>
+                <div class="pane" data-pane="second" hidden>
+                  <ol class="steps">
+                    <li data-t="0:41"><span>0:41</span>Goblet squat · 12 reps</li>
+                    <li data-t="2:10"><span>2:10</span>Romanian deadlift · 10 reps</li>
+                    <li data-t="3:35"><span>3:35</span>Reverse lunge · 10 each side</li>
+                    <li data-t="5:02"><span>5:02</span>Calf raise · 15 reps</li>
+                  </ol>
+                  <p class="hint">Tap a line to jump to it in the video.</p>
+                </div>
+                <div class="nudge">🔔 Tomorrow 7 AM · Leg day</div>
+              </div>
+            </div>
+            <div class="app" data-example="explainer" hidden>
+              <div class="clip" style="background:linear-gradient(160deg, #3d2a52, #1d1428 55%, #100b16)">
+                <span class="play">▶</span>
+                <span class="from">Saved from YouTube</span>
+                <span class="seek" hidden></span>
+              </div>
+              <div class="sheet">
+                <p class="title">Why plane tickets cost what they do</p>
+                <p class="by">Explainer · 14 min</p>
+                <div class="tabs" role="tablist">
+                  <button type="button" role="tab" class="tab on" data-tab="overview" aria-selected="true">Overview</button>
+                  <button type="button" role="tab" class="tab" data-tab="second" aria-selected="false">Sections</button>
+                </div>
+                <div class="pane" data-pane="overview">
+                  <div class="stats"><span><b>14</b>min</span><span><b>4</b>sections</span><span><b>3</b>key ideas</span></div>
+                  <p class="point"><span>The point</span>Fares follow demand and how full the plane is, not the distance you fly.</p>
+                  <p class="label">Key ideas</p>
+                  <ul class="facts">
+                    <li>Seats are sold in price "buckets"</li>
+                    <li>Cheaper buckets close as the flight fills</li>
+                    <li>Booking day matters less than you think</li>
+                  </ul>
+                </div>
+                <div class="pane" data-pane="second" hidden>
+                  <ol class="steps">
+                    <li data-t="0:00"><span>0:00</span>How a fare is set</li>
+                    <li data-t="3:12"><span>3:12</span>The fare bucket system</li>
+                    <li data-t="7:40"><span>7:40</span>When to actually book</li>
+                    <li data-t="11:05"><span>11:05</span>What the apps won't tell you</li>
+                  </ol>
+                  <p class="hint">Tap a line to jump to it in the video.</p>
+                </div>
+                <div class="nudge">💬 Ask Rook: "when should I book my flight?"</div>
+              </div>
+            </div>
           </div>
         </div>
-        <p class="try">Try it: tap <b>How to make</b>, then a step.</p>
+        <p class="try">Real breakdowns, not bookmarks. Try the tabs, then tap a line.</p>
         </div>
       </div>
     </section>
@@ -211,8 +331,8 @@
     <section class="features">
       <div class="card">
         <div class="dot"></div>
-        <h3>Cook it</h3>
-        <p>Recipes become a card with ingredients and steps, each step linked to the exact second in the video.</p>
+        <h3>Use it</h3>
+        <p>Recipes, workouts, places, how-tos and explainers each get a breakdown that fits, with every step linked to the exact second in the video.</p>
       </div>
       <div class="card">
         <div class="dot"></div>
@@ -250,29 +370,40 @@
     var params = new URLSearchParams(location.search);
     var ref = params.get("ref") || params.get("utm_source") || "";
 
-    // The example breakdown: switch tabs, tick ingredients, tap a step to "jump" the video.
-    var tabs = document.querySelectorAll(".tab");
-    var seek = document.getElementById("seek");
-    tabs.forEach(function (tab) {
-      tab.addEventListener("click", function () {
-        tabs.forEach(function (t) {
-          var on = t === tab;
-          t.classList.toggle("on", on);
-          t.setAttribute("aria-selected", on ? "true" : "false");
-        });
-        document.querySelectorAll(".pane").forEach(function (pane) {
-          pane.hidden = pane.getAttribute("data-pane") !== tab.getAttribute("data-tab");
+    // The example breakdowns: pick an example, switch its tabs, tick a line, tap a step to "jump" the video.
+    document.querySelectorAll(".chip").forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        document.querySelectorAll(".chip").forEach(function (c) { c.classList.toggle("on", c === chip); });
+        document.querySelectorAll(".app").forEach(function (app) {
+          app.hidden = app.getAttribute("data-example") !== chip.getAttribute("data-show");
         });
       });
     });
-    document.querySelectorAll(".ticks li").forEach(function (li) {
-      li.addEventListener("click", function () { li.classList.toggle("done"); });
-    });
-    document.querySelectorAll(".steps li").forEach(function (li) {
-      li.addEventListener("click", function () {
-        document.querySelectorAll(".steps li").forEach(function (other) { other.classList.toggle("now", other === li); });
-        seek.textContent = "▶ " + li.getAttribute("data-t");
-        seek.hidden = false;
+    document.querySelectorAll(".app").forEach(function (app) {
+      var tabs = app.querySelectorAll(".tab");
+      var seek = app.querySelector(".seek");
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          tabs.forEach(function (t) {
+            var on = t === tab;
+            t.classList.toggle("on", on);
+            t.setAttribute("aria-selected", on ? "true" : "false");
+          });
+          app.querySelectorAll(".pane").forEach(function (pane) {
+            pane.hidden = pane.getAttribute("data-pane") !== tab.getAttribute("data-tab");
+          });
+        });
+      });
+      app.querySelectorAll(".ticks li").forEach(function (li) {
+        li.addEventListener("click", function () { li.classList.toggle("done"); });
+      });
+      var steps = app.querySelectorAll(".steps li");
+      steps.forEach(function (li) {
+        li.addEventListener("click", function () {
+          steps.forEach(function (other) { other.classList.toggle("now", other === li); });
+          seek.textContent = "▶ " + li.getAttribute("data-t");
+          seek.hidden = false;
+        });
       });
     });
 
