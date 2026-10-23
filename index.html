@@ -91,6 +91,11 @@
   .results { padding: 0 0 28px; }
   .results h2 { font-size: clamp(24px, 3.4vw, 34px); letter-spacing: -0.025em; margin: 0 0 6px; }
   .results p.sub { color: var(--muted); margin: 0 0 22px; font-size: 16px; }
+  .again { text-align: center; padding: 10px 0 80px; }
+  .again h2 { font-size: clamp(26px, 3.6vw, 36px); letter-spacing: -0.025em; margin: 0 0 8px; }
+  .again .sub { color: var(--muted); margin: 0 auto 24px; max-width: 40ch; font-size: 16px; }
+  .cta { display: inline-flex; align-items: center; height: 52px; padding: 0 26px; border-radius: 26px; background: var(--accent); color: var(--accent-ink); font-weight: 650; text-decoration: none; }
+  html { scroll-behavior: smooth; }
   .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 0 0 80px; }
   .card {
     padding: 22px; border-radius: 22px; background: var(--surface); border: 1px solid var(--stroke);
@@ -155,9 +160,9 @@
                   <li><span>0:12</span>Sear the chicken skin-down</li>
                   <li><span>0:34</span>Add garlic, then the glaze</li>
                   <li><span>0:51</span>Simmer until sticky, 5 min</li>
-                  <li><span>1:08</span>Top with sesame and scallion</li>
+                  <li><span>1:08</span>Top with sesame</li>
                 </ol>
-                <div class="nudge">🔔 Sunday 5 PM · "Make this for dinner"</div>
+                <div class="nudge">🔔 Sun 5 PM · Make this for dinner</div>
               </div>
             </div>
           </div>
@@ -186,6 +191,12 @@
         <h3>Find it in a second</h3>
         <p>Ask "what was that pasta from last month?" and Rook pulls it up. Mark things done as you go.</p>
       </div>
+    </section>
+
+    <section class="again">
+      <h2>Be first in.</h2>
+      <p class="sub">Early access opens in small waves. Join the list and we'll send your invite.</p>
+      <a class="cta" href="#join" onclick="setTimeout(function(){document.querySelector('#join input[type=email]').focus()},300)">Get early access</a>
     </section>
 
     <footer>
