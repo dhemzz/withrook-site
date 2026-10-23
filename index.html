@@ -72,22 +72,40 @@
   .screen img { width: 58%; border-radius: 22%; }
   .app { width: 100%; height: 100%; display: flex; flex-direction: column; background: #0B0D10; text-align: left; }
   .clip {
-    flex: 0 0 34%; position: relative; display: grid; place-items: center;
+    flex: 0 0 30%; position: relative; display: grid; place-items: center;
     background: linear-gradient(160deg, #6b3a22, #2a1610 55%, #120b09);
   }
   .play { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-size: 13px;
     background: rgba(255,255,255,0.18); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); padding-left: 3px; }
   .from { position: absolute; left: 12px; bottom: 10px; font-size: 11px; color: rgba(255,255,255,0.8); }
-  .sheet { flex: 1; padding: 14px 14px 12px; display: flex; flex-direction: column; gap: 4px; overflow: hidden; }
-  .kind { margin: 0; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); font-weight: 650; }
-  .title { margin: 0 0 6px; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
-  .label { margin: 6px 0 2px; font-size: 11px; color: var(--faint); font-weight: 600; }
+  .seek { position: absolute; right: 12px; bottom: 9px; font-size: 11px; font-weight: 650; padding: 3px 8px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); }
+  .sheet { flex: 1; padding: 12px 13px 11px; display: flex; flex-direction: column; gap: 3px; overflow: hidden; min-height: 0; }
+  .title { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+  .by { margin: 0 0 8px; font-size: 11px; color: var(--faint); }
+  .tabs { display: flex; gap: 3px; padding: 3px; border-radius: 16px; background: var(--surface); border: 1px solid var(--stroke); margin-bottom: 8px; }
+  .tab { flex: 1; height: 26px; padding: 0; border-radius: 13px; background: transparent; color: var(--muted); font-size: 11.5px; font-weight: 650; }
+  .tab.on { background: rgba(255,255,255,0.14); color: var(--text); }
+  .pane { display: flex; flex-direction: column; gap: 4px; min-height: 0; }
+  .pane[hidden] { display: none; }
+  .stats { display: flex; gap: 6px; }
+  .stats span { flex: 1; padding: 6px 4px; border-radius: 10px; background: var(--surface); text-align: center; font-size: 9.5px; color: var(--faint); line-height: 1.2; }
+  .stats b { display: block; font-size: 14px; color: var(--text); }
+  .gist { margin: 4px 0 2px; font-size: 11.5px; line-height: 1.45; color: var(--muted); }
+  .label { margin: 4px 0 1px; font-size: 11px; color: var(--faint); font-weight: 600; }
+  .label em { font-style: normal; font-weight: 400; opacity: 0.7; }
   .ticks, .steps { list-style: none; margin: 0; padding: 0; font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
+  .ticks li { cursor: pointer; user-select: none; }
   .ticks li::before { content: ""; display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.35); margin-right: 8px; vertical-align: -1px; }
   .ticks li.done { color: var(--faint); text-decoration: line-through; }
   .ticks li.done::before { background: var(--accent); border-color: var(--accent); }
-  .steps span { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 8px; font-weight: 600; }
-  .nudge { margin-top: auto; line-height: 1.35; font-size: 11px; padding: 9px 11px; border-radius: 14px; background: var(--surface); border: 1px solid var(--stroke); color: var(--text); }
+  .steps { gap: 6px; }
+  .steps li { cursor: pointer; padding: 7px 9px; border-radius: 11px; background: var(--surface); border: 1px solid transparent; line-height: 1.35; }
+  .steps li.now { border-color: rgba(255,107,74,0.7); color: var(--text); }
+  .steps span { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 8px; font-weight: 650; }
+  .hint { margin: 4px 0 0; font-size: 10.5px; color: var(--faint); }
+  .nudge { margin-top: auto; font-size: 11px; line-height: 1.35; padding: 9px 11px; border-radius: 14px; background: var(--surface); border: 1px solid var(--stroke); color: var(--text); }
+  .try { text-align: center; margin: 16px 0 0; font-size: 13px; color: var(--faint); }
+  .try b { color: var(--muted); font-weight: 600; }
   .results { padding: 0 0 28px; }
   .results h2 { font-size: clamp(24px, 3.4vw, 34px); letter-spacing: -0.025em; margin: 0 0 6px; }
   .results p.sub { color: var(--muted); margin: 0 0 22px; font-size: 16px; }
@@ -108,7 +126,7 @@
   footer a { color: var(--muted); text-decoration: none; }
   footer a:hover { color: var(--text); }
   @media (max-width: 820px) {
-    .phone { width: min(250px, 66vw); }
+    .phone { width: min(290px, 78vw); }
     .hero { grid-template-columns: 1fr; gap: 44px; padding: 28px 0 56px; text-align: left; }
     .features { grid-template-columns: 1fr; }
   }
@@ -138,34 +156,49 @@
         <p class="note" id="note" role="status">For iPhone. We'll only email you about Rook.</p>
       </div>
       <div class="stage">
+        <div>
         <div class="phone">
           <div class="screen" id="screen">
-            <div class="app" aria-label="Example: a saved recipe video in Rook">
+            <div class="app" aria-label="Example breakdown of a saved recipe video in Rook">
               <div class="clip">
                 <span class="play">▶</span>
                 <span class="from">Saved from TikTok</span>
+                <span class="seek" id="seek" hidden></span>
               </div>
               <div class="sheet">
-                <p class="kind">Recipe · 25 min</p>
                 <p class="title">Honey garlic chicken</p>
-                <p class="label">Ingredients</p>
-                <ul class="ticks">
-                  <li class="done">Chicken thighs</li>
-                  <li class="done">Honey</li>
-                  <li>Garlic, 4 cloves</li>
-                  <li>Soy sauce</li>
-                </ul>
-                <p class="label">Steps</p>
-                <ol class="steps">
-                  <li><span>0:12</span>Sear the chicken skin-down</li>
-                  <li><span>0:34</span>Add garlic, then the glaze</li>
-                  <li><span>0:51</span>Simmer until sticky, 5 min</li>
-                  <li><span>1:08</span>Top with sesame</li>
-                </ol>
+                <p class="by">Recipe · 25 min</p>
+                <div class="tabs" role="tablist">
+                  <button type="button" role="tab" class="tab on" data-tab="overview" aria-selected="true">Overview</button>
+                  <button type="button" role="tab" class="tab" data-tab="steps" aria-selected="false">How to make</button>
+                </div>
+                <div class="pane" data-pane="overview">
+                  <div class="stats"><span><b>25</b>min</span><span><b>4</b>servings</span><span><b>7</b>ingredients</span></div>
+                  <p class="gist">Sticky, sweet-savory chicken thighs made in one pan. The glaze is just honey, garlic and soy.</p>
+                  <p class="label">Ingredients <em>tap to tick</em></p>
+                  <ul class="ticks">
+                    <li class="done">4 chicken thighs</li>
+                    <li class="done">3 tbsp honey</li>
+                    <li>4 cloves garlic</li>
+                    <li>2 tbsp soy sauce</li>
+                    <li>Sesame + scallion</li>
+                  </ul>
+                </div>
+                <div class="pane" data-pane="steps" hidden>
+                  <ol class="steps">
+                    <li data-t="0:12"><span>0:12</span>Sear the thighs skin-down until golden</li>
+                    <li data-t="0:34"><span>0:34</span>Add garlic, then pour in the glaze</li>
+                    <li data-t="0:51"><span>0:51</span>Simmer until sticky, about 5 min</li>
+                    <li data-t="1:08"><span>1:08</span>Top with sesame and scallion</li>
+                  </ol>
+                  <p class="hint">Tap a step to jump to it in the video.</p>
+                </div>
                 <div class="nudge">🔔 Sun 5 PM · Make this for dinner</div>
               </div>
             </div>
           </div>
+        </div>
+        <p class="try">Try it: tap <b>How to make</b>, then a step.</p>
         </div>
       </div>
     </section>
@@ -202,6 +235,8 @@
     <footer>
       <span>© 2026 Rook</span>
       <a href="https://dhemzz.github.io/rook-player/privacy.html">Privacy</a>
+      <a href="https://www.tiktok.com/@withrook">TikTok</a>
+      <a href="https://www.instagram.com/withrook.app">Instagram</a>
       <a href="mailto:hello@withrook.app">hello@withrook.app</a>
     </footer>
   </div>
@@ -215,15 +250,31 @@
     var params = new URLSearchParams(location.search);
     var ref = params.get("ref") || params.get("utm_source") || "";
 
-    // Swap the icon for the demo clip once demo.mp4 is in the repo.
-    var video = document.createElement("video");
-    video.muted = true; video.loop = true; video.autoplay = true; video.playsInline = true;
-    video.setAttribute("playsinline", ""); video.preload = "auto";
-    video.addEventListener("loadeddata", function () {
-      var screen = document.getElementById("screen");
-      screen.innerHTML = ""; screen.appendChild(video); video.play().catch(function () {});
+    // The example breakdown: switch tabs, tick ingredients, tap a step to "jump" the video.
+    var tabs = document.querySelectorAll(".tab");
+    var seek = document.getElementById("seek");
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        tabs.forEach(function (t) {
+          var on = t === tab;
+          t.classList.toggle("on", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        document.querySelectorAll(".pane").forEach(function (pane) {
+          pane.hidden = pane.getAttribute("data-pane") !== tab.getAttribute("data-tab");
+        });
+      });
     });
-    video.src = "demo.mp4";
+    document.querySelectorAll(".ticks li").forEach(function (li) {
+      li.addEventListener("click", function () { li.classList.toggle("done"); });
+    });
+    document.querySelectorAll(".steps li").forEach(function (li) {
+      li.addEventListener("click", function () {
+        document.querySelectorAll(".steps li").forEach(function (other) { other.classList.toggle("now", other === li); });
+        seek.textContent = "▶ " + li.getAttribute("data-t");
+        seek.hidden = false;
+      });
+    });
 
     function say(text, kind) { note.textContent = text; note.className = "note" + (kind ? " " + kind : ""); }
 
