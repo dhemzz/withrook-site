@@ -667,7 +667,7 @@
       fetch(ENDPOINT, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ name: name, email: email, ref: ref, r: invitedBy, referrer: document.referrer, company: form.company.value })
+        body: JSON.stringify({ name: name, email: email, ref: ref, r: invitedBy, referrer: document.referrer, sid: sid, company: form.company.value })
       }).then(function (response) {
         if (response.ok) {
           return response.json().catch(function () { return {}; }).then(function (data) {
