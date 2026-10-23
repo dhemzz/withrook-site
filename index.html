@@ -495,7 +495,7 @@
     var sid = Math.random().toString(36).slice(2, 12) + Date.now().toString(36);
     var queue = [], sentView = false, started = Date.now();
     function track(e, l, v) {
-      queue.push({ e: e, l: l || undefined, v: typeof v === "number" ? v : undefined });
+      queue.push({ e: e, l: l || undefined, v: typeof v === "number" ? v : undefined, t: Math.round((Date.now() - started) / 1000) });
       if (queue.length >= 20) flush();
     }
     function flush() {
