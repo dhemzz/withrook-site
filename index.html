@@ -74,6 +74,7 @@
   .note { margin: 12px 0 0 6px; font-size: 13px; color: var(--faint); min-height: 18px; }
   .note.ok { color: var(--text); }
   .note.err { color: #FF9C86; }
+  #join .check:empty { display: none; }
   .stage { display: flex; justify-content: center; position: relative; }
   .glow { position: absolute; z-index: -1; left: 50%; top: 46%; width: 560px; height: 560px; max-width: 140vw; margin: -280px 0 0 -280px; border-radius: 50%; pointer-events: none;
     background: radial-gradient(closest-side, rgba(255,107,74,0.30), rgba(255,107,74,0.10) 55%, rgba(255,107,74,0) 100%); filter: blur(20px); will-change: transform; }
@@ -480,6 +481,8 @@
 <script>
   (function () {
     var ENDPOINT = "https://njgziheshhfixdevawte.supabase.co/functions/v1/waitlist";
+    // Cloudflare Turnstile site key (public). Empty = no bot check; the server only demands one once its secret is set.
+    var TURNSTILE_SITE_KEY = "0x4AAAAAAFjdyiPnVZS4jnR6";
     var form = document.getElementById("join");
     var note = document.getElementById("note");
     var button = form.querySelector("button");
@@ -663,19 +666,55 @@
 
     function say(text, kind) { note.textContent = text; note.className = "note" + (kind ? " " + kind : ""); }
 
+    // The welcome email's Confirm button lands back here.
+    if (params.get("confirmed") === "1") say("Email confirmed. You're all set.", "ok");
+    if (params.get("confirmed") === "0") say("That confirm link didn't work. Reply to our email and we'll sort it.", "err");
+
+    // Invisible bot check: Turnstile runs quietly when the page loads and only shows itself if it's unsure.
+    // Each answer works once, so it's fetched again after every send.
+    var botToken = "", botWidget = null, waitingForCheck = false;
+    if (TURNSTILE_SITE_KEY) {
+      window.onRookTurnstile = function () {
+        var box = document.createElement("div");
+        box.className = "check";
+        form.appendChild(box);
+        botWidget = window.turnstile.render(box, {
+          sitekey: TURNSTILE_SITE_KEY,
+          appearance: "interaction-only",
+          theme: "dark",
+          callback: function (token) {
+            botToken = token;
+            if (waitingForCheck) { waitingForCheck = false; form.requestSubmit(); }
+          },
+          "expired-callback": function () { botToken = ""; },
+          "error-callback": function () { botToken = ""; }
+        });
+      };
+      var check = document.createElement("script");
+      check.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onRookTurnstile";
+      check.async = true;
+      document.head.appendChild(check);
+    }
+    function freshCheck() {
+      botToken = "";
+      if (botWidget !== null && window.turnstile) window.turnstile.reset(botWidget);
+    }
+
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       var email = form.email.value.trim();
       var name = form.first.value.trim();
       if (!name) { say("Add your first name.", "err"); track("error", "name"); form.first.focus(); return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { say("That email doesn't look right.", "err"); track("error", "email"); return; }
+      if (TURNSTILE_SITE_KEY && !botToken) { waitingForCheck = true; say("One moment…"); return; }
       button.disabled = true; say("Adding you…");
       track("submit"); flush();
       fetch(ENDPOINT, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ name: name, email: email, ref: ref, r: invitedBy, referrer: document.referrer, sid: sid, company: form.company.value })
+        body: JSON.stringify({ name: name, email: email, ref: ref, r: invitedBy, referrer: document.referrer, sid: sid, company: form.company.value, token: botToken || undefined })
       }).then(function (response) {
+        freshCheck();
         if (response.ok) {
           return response.json().catch(function () { return {}; }).then(function (data) {
             form.reset();
@@ -690,9 +729,14 @@
           });
         }
         button.disabled = false;
-        say(response.status === 400 ? "That email doesn't look right." : "Something went wrong. Try again in a minute.", "err");
-        track("error", String(response.status));
+        return response.json().catch(function () { return {}; }).then(function (data) {
+          var text = data.error === "check" ? "We couldn't check you're not a bot. Refresh the page and try again."
+            : response.status === 400 ? "That email doesn't look right." : "Something went wrong. Try again in a minute.";
+          say(text, "err");
+          track("error", data.error === "check" ? "check" : String(response.status));
+        });
       }).catch(function () {
+        freshCheck();
         button.disabled = false;
         say("Something went wrong. Try again in a minute.", "err");
         track("error", "network");
