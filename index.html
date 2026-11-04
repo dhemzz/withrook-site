@@ -505,6 +505,15 @@
     .how .swipehint { display: block; }
   }
   .swipehint { display: none; margin: 18px 0 0; text-align: center; font-size: 13px; color: var(--faint); }
+
+  /* Nearby nudge, laid over the Upcoming phone like a real notification. */
+  .nearby { position: absolute; z-index: 9; left: 6px; right: 6px; top: 38px; display: flex; gap: 8px; align-items: center; padding: 9px 10px; border-radius: 18px;
+    background: rgba(40,38,36,0.78); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); box-shadow: 0 10px 30px rgba(0,0,0,0.45); color: var(--text); text-align: left; }
+  .nearby i { flex: none; width: 26px; height: 26px; border-radius: 8px; background: url(apple-touch-icon.png) center/cover no-repeat; }
+  .nearby div { flex: 1; min-width: 0; }
+  .nearby b { display: block; font-size: 11.5px; font-weight: 600; line-height: 1.25; }
+  .nearby span { display: block; font-size: 11px; line-height: 1.3; color: rgba(247,246,244,0.75); }
+  .nearby em { align-self: flex-start; font-style: normal; font-size: 11px; color: rgba(247,246,244,0.5); }
 </style>
 </head>
 <body>
@@ -687,11 +696,11 @@
         <ul class="rlist">
           <li><span class="ri"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6.5 2.5 8 2.5 8h-17S6 15.5 6 9"/><path d="M10.2 20.5a2 2 0 0 0 3.6 0"/></svg></span><div><h3>Remind me, on any save</h3><p>Tonight, tomorrow morning, this weekend, or any day you pick. One tap.</p></div></li>
           <li><span class="ri"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span><div><h3>Rook spots the dates</h3><p>A pop-up, a ticket drop, a last day: Rook offers a reminder before it's gone.</p></div></li>
-          
-          <li><span class="ri"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span><div><h3>Never noisy</h3><p>One morning pick a day at most, and only if you turn it on.</p></div></li>
+          <li><span class="ri"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg></span><div><h3>Near a spot you saved</h3><p>Walk past a restaurant or place you saved, and Rook gives you a nudge.</p></div></li>
+          <li><span class="ri"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span><div><h3>Never noisy</h3><p>One nudge a day at most, never at night, and only the kinds you turn on.</p></div></li>
         </ul>
       </div>
-      <div class="stagemini"><div class="phone mini"><div class="screen"><div class="app shotapp"><img class="shot" src="img/screens/upcoming.jpg" alt="Rook Upcoming: premieres, releases and ticket drops from your saves, by date" width="660" height="1434"><div class="ui still shotbar" aria-hidden="true"><div class="sb"><b>9:41</b><span><svg viewBox="0 0 20 12" width="19" height="12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3.2" height="4" rx="1"/><rect x="5.4" y="5.5" width="3.2" height="6.5" rx="1"/><rect x="10.8" y="3" width="3.2" height="9" rx="1"/><rect x="16.2" y="0" width="3.2" height="12" rx="1"/></svg><svg viewBox="0 0 18 13" width="17" height="12" fill="currentColor" aria-hidden="true"><path d="M9 2.2c2.6 0 5 1 6.8 2.7l1.3-1.4C14.9 1.4 12 .2 9 .2S3.1 1.4.9 3.5l1.3 1.4C4 3.2 6.4 2.2 9 2.2zm0 4c1.5 0 2.9.6 4 1.5l1.3-1.4A7.9 7.9 0 0 0 9 4.2c-2 0-3.9.8-5.3 2.1L5 7.7c1.1-.9 2.5-1.5 4-1.5zm0 4c.6 0 1.1.2 1.5.6L9 12.4l-1.5-1.6c.4-.4.9-.6 1.5-.6z"/></svg><i class="batt"><i></i></i></span></div></div></div></div></div></div>
+      <div class="stagemini"><div class="phone mini"><div class="screen"><div class="app shotapp"><div class="nearby" aria-hidden="true"><i></i><div><b>Bar Lis is right around the corner</b><span>You saved it in June. Now's your chance.</span></div><em>now</em></div><img class="shot" src="img/screens/upcoming.jpg" alt="Rook Upcoming: premieres, releases and ticket drops from your saves, by date" width="660" height="1434"><div class="ui still shotbar" aria-hidden="true"><div class="sb"><b>9:41</b><span><svg viewBox="0 0 20 12" width="19" height="12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3.2" height="4" rx="1"/><rect x="5.4" y="5.5" width="3.2" height="6.5" rx="1"/><rect x="10.8" y="3" width="3.2" height="9" rx="1"/><rect x="16.2" y="0" width="3.2" height="12" rx="1"/></svg><svg viewBox="0 0 18 13" width="17" height="12" fill="currentColor" aria-hidden="true"><path d="M9 2.2c2.6 0 5 1 6.8 2.7l1.3-1.4C14.9 1.4 12 .2 9 .2S3.1 1.4.9 3.5l1.3 1.4C4 3.2 6.4 2.2 9 2.2zm0 4c1.5 0 2.9.6 4 1.5l1.3-1.4A7.9 7.9 0 0 0 9 4.2c-2 0-3.9.8-5.3 2.1L5 7.7c1.1-.9 2.5-1.5 4-1.5zm0 4c.6 0 1.1.2 1.5.6L9 12.4l-1.5-1.6c.4-.4.9-.6 1.5-.6z"/></svg><i class="batt"><i></i></i></span></div></div></div></div></div></div>
     </section>
 
     <section class="pro reveal" id="pro" aria-label="Rook Pro">
@@ -706,7 +715,7 @@
     <section class="faq reveal" id="faq" aria-label="Questions">
       <h2>Questions</h2>
       <details data-q="free"><summary>Is Rook free?</summary><p>Yes. Saving, your library, albums and playing your saves are free for good. Free also includes 5 full breakdowns and 5 Ask questions a month, and every other save still gets a quick summary so you can find it later.</p><p>Rook Pro is for people who save a lot. You get full breakdowns on everything you save, with recipe cards, steps and timestamps, long videos broken down in full, and 60 Ask questions a month. You can try it free first. Fair use applies.</p></details>
-      <details data-q="notify"><summary>Will Rook spam me with notifications?</summary><p>No. Reminders you set go off when you asked. Rook only offers a reminder when a save has a real date, like an event or a last day, and never sets one without asking. The morning pick is off until you turn it on, and it's one a day at most.</p></details>
+      <details data-q="notify"><summary>Will Rook spam me with notifications?</summary><p>No. Reminders you set go off when you asked. Rook only offers a reminder when a save has a real date, like an event or a last day, and never sets one without asking. Extras like the morning pick or a nudge when you're near a spot you saved stay off until you turn them on, and it's one a day at most.</p></details>
       <details data-q="videos"><summary>Does Rook download or repost videos?</summary><p>No. Rook never stores the video. Your saves play from the original post, with the creator credited and a link back to it.</p></details>
       <details data-q="data"><summary>What happens to my data?</summary><p>Your saves are private to you, we never sell your data, and you can delete your account and everything in it at any time. The details are in our <a href="privacy.html">privacy policy</a>.</p></details>
       <details data-q="when"><summary>When do I get in?</summary><p>We're sending invites in waves, in the order people joined. After you join you get a link: every friend who signs up with it moves you up 25 spots. Everyone in the first wave gets their first month of Rook Pro free.</p></details>
