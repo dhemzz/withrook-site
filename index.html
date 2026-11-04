@@ -480,6 +480,31 @@
     .results { text-align: left; }
     .results p.sub { margin: 0; }
   }
+
+  /* Upscale pass (2026-11-04): lighter type, quieter accents, calmer demo cues. */
+  h1 { font-weight: 600; letter-spacing: -0.032em; }
+  h2, .trio h3 { font-weight: 600; }
+  .trio h3, .rlist h3, .plan h3, .card h3 { font-weight: 600; }
+  .faq summary { font-weight: 500; }
+  header span { font-weight: 600; }
+  .cta, form button { font-weight: 600; }
+  .perk { color: var(--muted); font-weight: 500; }
+  .perk i { background: rgba(247,246,244,0.4); }
+  @keyframes ring { 0% { box-shadow: 0 0 0 0 rgba(247,246,244,0.28); } 80% { box-shadow: 0 0 0 9px rgba(247,246,244,0); } 100% { box-shadow: 0 0 0 0 rgba(247,246,244,0); } }
+  .cue .ui .tab:not(.on), .cue .app[data-example] .rem:not(.set) { animation-duration: 2.6s; }
+  .cue .group:not(.plain) li:not(.done) i { animation: none; border-color: rgba(247,246,244,0.35); }
+  .cue .ui .tab:not(.on)::after { background: rgba(247,246,244,0.16); color: var(--text); font-weight: 500; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+  .tryhint i { animation-duration: 2.6s; }
+  /* Phones: How it works is a sideways swipe row instead of three tall phones stacked. */
+  @media (max-width: 820px) {
+    .how .trio { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+      margin: 0 -20px; padding: 0 20px 8px; scroll-padding: 0 20px; overscroll-behavior-x: contain; }
+    .how .trio::-webkit-scrollbar { display: none; }
+    .how .trio figure { flex: 0 0 76%; scroll-snap-align: start; align-items: flex-start; }
+    .how .trio .mini { width: 100%; }
+    .how .swipehint { display: block; }
+  }
+  .swipehint { display: none; margin: 18px 0 0; text-align: center; font-size: 13px; color: var(--faint); }
 </style>
 </head>
 <body>
@@ -652,6 +677,7 @@
       <figure class="reveal"><div class="phone mini"><div class="screen"><div class="app shotapp"><img class="shot" src="img/screens/categories.jpg" alt="Rook Categories: live deals, and albums like Movies and Recipes filled on their own" width="660" height="1434"><div class="ui still shotbar" aria-hidden="true"><div class="sb"><b>9:41</b><span><svg viewBox="0 0 20 12" width="19" height="12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3.2" height="4" rx="1"/><rect x="5.4" y="5.5" width="3.2" height="6.5" rx="1"/><rect x="10.8" y="3" width="3.2" height="9" rx="1"/><rect x="16.2" y="0" width="3.2" height="12" rx="1"/></svg><svg viewBox="0 0 18 13" width="17" height="12" fill="currentColor" aria-hidden="true"><path d="M9 2.2c2.6 0 5 1 6.8 2.7l1.3-1.4C14.9 1.4 12 .2 9 .2S3.1 1.4.9 3.5l1.3 1.4C4 3.2 6.4 2.2 9 2.2zm0 4c1.5 0 2.9.6 4 1.5l1.3-1.4A7.9 7.9 0 0 0 9 4.2c-2 0-3.9.8-5.3 2.1L5 7.7c1.1-.9 2.5-1.5 4-1.5zm0 4c.6 0 1.1.2 1.5.6L9 12.4l-1.5-1.6c.4-.4.9-.6 1.5-.6z"/></svg><i class="batt"><i></i></i></span></div></div></div></div></div><figcaption><span class="step">2</span><h3>It organizes itself</h3><p>Saves sort into albums like Recipes and Movies on their own, and codes and dates get pulled out for you.</p></figcaption></figure>
       <figure class="reveal"><div class="phone mini"><div class="screen"><div class="app shotapp"><img class="shot" src="img/screens/ask.jpg" alt="Rook Ask: What are you looking for? with suggestions like Plan a night out: dinner then drinks" width="660" height="1434"><div class="ui still shotbar" aria-hidden="true"><div class="sb"><b>9:41</b><span><svg viewBox="0 0 20 12" width="19" height="12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3.2" height="4" rx="1"/><rect x="5.4" y="5.5" width="3.2" height="6.5" rx="1"/><rect x="10.8" y="3" width="3.2" height="9" rx="1"/><rect x="16.2" y="0" width="3.2" height="12" rx="1"/></svg><svg viewBox="0 0 18 13" width="17" height="12" fill="currentColor" aria-hidden="true"><path d="M9 2.2c2.6 0 5 1 6.8 2.7l1.3-1.4C14.9 1.4 12 .2 9 .2S3.1 1.4.9 3.5l1.3 1.4C4 3.2 6.4 2.2 9 2.2zm0 4c1.5 0 2.9.6 4 1.5l1.3-1.4A7.9 7.9 0 0 0 9 4.2c-2 0-3.9.8-5.3 2.1L5 7.7c1.1-.9 2.5-1.5 4-1.5zm0 4c.6 0 1.1.2 1.5.6L9 12.4l-1.5-1.6c.4-.4.9-.6 1.5-.6z"/></svg><i class="batt"><i></i></i></span></div></div></div></div></div><figcaption><span class="step">3</span><h3>Ask anything. Miss nothing.</h3><p>Plan a night out from your saved spots, build a shopping list, or find that one video.</p></figcaption></figure>
       </div>
+      <p class="swipehint" aria-hidden="true">Swipe for the next step</p>
     </section>
 
     <section class="remind reveal" id="reminders" aria-label="Reminders">
@@ -681,10 +707,7 @@
       <h2>Questions</h2>
       <details data-q="free"><summary>Is Rook free?</summary><p>Yes. Saving, your library, albums and playing your saves are free for good. Free also includes 5 full breakdowns and 5 Ask questions a month, and every other save still gets a quick summary so you can find it later.</p><p>Rook Pro is for people who save a lot. You get full breakdowns on everything you save, with recipe cards, steps and timestamps, long videos broken down in full, and 60 Ask questions a month. You can try it free first. Fair use applies.</p></details>
       <details data-q="notify"><summary>Will Rook spam me with notifications?</summary><p>No. Reminders you set go off when you asked. Rook only offers a reminder when a save has a real date, like an event or a last day, and never sets one without asking. The morning pick is off until you turn it on, and it's one a day at most.</p></details>
-      <details data-q="apps"><summary>Which apps does it work with?</summary><p>TikTok, Instagram (Reels, posts and carousels) and YouTube (videos and Shorts). We plan to add more apps in the future.</p></details>
-      <details data-q="how"><summary>How do I save something?</summary><p>Tap Share on any TikTok, Reel or YouTube video and pick Rook. Rook breaks it down in the background, so it's ready when you open it.</p></details>
       <details data-q="videos"><summary>Does Rook download or repost videos?</summary><p>No. Rook never stores the video. Your saves play from the original post, with the creator credited and a link back to it.</p></details>
-      <details data-q="android"><summary>Is there an Android version?</summary><p>Not yet. Rook is iPhone only for now, but we plan to make an Android version in the future. Join the list and we'll email you when it's ready.</p></details>
       <details data-q="data"><summary>What happens to my data?</summary><p>Your saves are private to you, we never sell your data, and you can delete your account and everything in it at any time. The details are in our <a href="privacy.html">privacy policy</a>.</p></details>
       <details data-q="when"><summary>When do I get in?</summary><p>We're sending invites in waves, in the order people joined. After you join you get a link: every friend who signs up with it moves you up 25 spots. Everyone in the first wave gets their first month of Rook Pro free.</p></details>
     </section>
@@ -693,7 +716,7 @@
       <div class="backdrop ask" aria-hidden="true"></div>
       <h2>The first wave is small. Get in it.</h2>
       <p class="sub">Invites go out a few hundred at a time, in the order people joined. The first wave gets their first month of Rook Pro free.</p>
-      <a class="cta" href="#join" onclick="setTimeout(function(){document.querySelector('#join input[name=first]').focus()},300)">Save my spot</a>
+      <a class="cta" href="#join" onclick="setTimeout(function(){document.querySelector('#join input[name=first]').focus()},300)">Get early access</a>
     </section>
 
     <p class="source">* The Harris Poll for Instacart, 2022, 2,086 U.S. adults.</p>
