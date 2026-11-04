@@ -76,8 +76,6 @@
   .note.err { color: #FF8F8A; }
   #join .check:empty { display: none; }
   .stage { display: flex; justify-content: center; position: relative; }
-  .glow { position: absolute; z-index: -1; left: 50%; top: 46%; width: 560px; height: 560px; max-width: 140vw; margin: -280px 0 0 -280px; border-radius: 50%; pointer-events: none;
-    background: radial-gradient(closest-side, rgba(255,95,88,0.30), rgba(255,95,88,0.10) 55%, rgba(255,95,88,0) 100%); filter: blur(20px); will-change: transform; }
   .hero { position: relative; z-index: 0; }
   .count { margin: 10px 0 0 6px; font-size: 13px; color: var(--muted); }
   .count b { color: var(--text); font-weight: 650; font-variant-numeric: tabular-nums; }
@@ -371,8 +369,6 @@
       radial-gradient(ellipse 78% 48% at 30% 104%, rgba(70,92,120,0.11), rgba(70,92,120,0) 72%),
       #0A0908; }
   .ui .sb { background: transparent; }
-  /* Behind the phone: a soft coral-white rim like the app's cover glow, never a muddy coral wash. */
-  .glow { display: none; }
 
   /* Glass without outlines (chips, pills, inputs, cards), a 1px top highlight instead, like the app's light glass. */
   input[type=email], input[name=first] { border-color: transparent; background: var(--surface); box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); }
@@ -459,6 +455,31 @@
   .again .cta { color: var(--accent-ink); }
   footer { border-top-color: rgba(255,255,255,0.08); }
   @media (max-width: 820px) { .plans { grid-template-columns: 1fr; } .how { padding-top: 8px; } }
+
+  /* Spacing pass (2026-11-04): one rhythm for every section, so the page breathes evenly like the app. */
+  :root { --sec: clamp(88px, 11vw, 136px); --head: 12px; --gap: clamp(36px, 5vw, 56px); }
+  .results, .how, .remind, .pro, .faq { padding: var(--sec) 0 0; }
+  .again { padding: var(--sec) 0 var(--sec); }
+  .results { text-align: center; max-width: 640px; margin: 0 auto; padding-top: calc(var(--sec) * 0.6); }
+  .results + .how { padding-top: calc(var(--sec) * 0.75); }
+  .results p.sub { margin: 0 auto; max-width: 46ch; line-height: 1.55; text-wrap: balance; }
+  .results h2, .how > h2, .pro > h2, .faq h2, .again h2, .remind h2 { margin-bottom: var(--head); }
+  .how > p.sub, .pro > p.sub { margin-bottom: var(--gap); }
+  .how > h2:not(:has(+ p.sub)) { margin-bottom: var(--gap); }
+  .faq h2 { margin-bottom: calc(var(--gap) - 18px); }
+  .how .trio { gap: 40px; }
+  .trio h3 { margin-top: 2px; }
+  .remind .sub { margin-bottom: 32px; }
+  .rlist { gap: 22px; }
+  .again .sub { margin-bottom: 32px; max-width: 36ch; text-wrap: balance; }
+  .lead, .sub, .faq details p { text-wrap: pretty; }
+  footer { padding: 28px 0 48px; }
+  @media (max-width: 820px) {
+    .how .trio { gap: 72px; }
+    .remind { gap: 44px; }
+    .results { text-align: left; }
+    .results p.sub { margin: 0; }
+  }
 </style>
 </head>
 <body>
@@ -479,7 +500,7 @@
           <input class="trap" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button type="submit">Get early access</button>
         </form>
-        <p class="perk"><i></i>First wave gets their first month of Rook Pro free.</p>
+        <p class="perk"><i></i>First wave gets a month of Rook Pro free.</p>
         <p class="note" id="note" role="status">For iPhone. We'll only email you about Rook.</p>
         <p class="count" id="count" hidden><b></b> people are already waiting.</p>
         <div class="share" id="share" hidden>
@@ -488,7 +509,7 @@
           <div class="row"><code id="link"></code><button type="button" id="copy">Share</button></div>
         </div>
       </div>
-      <div class="stage"><div class="glow" aria-hidden="true"></div>
+      <div class="stage">
         <div>
         <div class="chips" role="tablist" aria-label="Example saves">
           <button type="button" class="chip" data-show="demo" hidden>Watch it</button>
@@ -899,21 +920,6 @@
       demo.addEventListener("loadeddata", function () { demoChip.hidden = false; demoChip.click(); demo.play().catch(function () {}); });
       demo.addEventListener("error", function () { demo.remove(); });
       demoChip.addEventListener("click", function () { demo.play().catch(function () {}); });
-    }
-
-    // The glow behind the phone drifts a little as the page scrolls.
-    var glow = document.querySelector(".glow");
-    if (glow && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      var ticking = false;
-      window.addEventListener("scroll", function () {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(function () {
-          var y = Math.min(window.scrollY, 900);
-          glow.style.transform = "translate3d(" + (y * -0.04) + "px," + (y * 0.12) + "px,0) scale(" + (1 + y / 3000) + ")";
-          ticking = false;
-        });
-      }, { passive: true });
     }
 
     // The waitlist count shows once the list is big enough to be worth saying.
