@@ -42,7 +42,7 @@
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
-    background: linear-gradient(180deg, var(--raised), var(--bg) 900px) no-repeat, var(--bg);
+    background: #060505;
   }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
   header { display: flex; align-items: center; gap: 10px; padding: 22px 0; }
@@ -332,23 +332,46 @@
      solid coral only for the one action (Join), white glass for everything else, and the app's page ramp
      as you scroll: Library charcoal at the top, Categories' watermelon corner in the middle, Ask's coral
      lights around the sign-up at the bottom. */
-  section { position: relative; overflow-x: clip; }
-  .light { position: absolute; z-index: -1; pointer-events: none; border-radius: 50%; filter: blur(10px); }
-  /* Library: a soft overhead light, charcoal not coral; the phone's covers bring the colour. */
-  .light.library { left: 50%; top: -220px; width: 1300px; height: 760px; margin-left: -650px;
-    background: radial-gradient(closest-side, rgba(247,246,244,0.055), rgba(247,246,244,0.02) 55%, transparent); }
-  /* Categories: a faint watermelon light in the top-left corner and a deep wine pool low on the right. */
-  .light.categories { left: -260px; top: -120px; width: 820px; height: 620px;
-    background: radial-gradient(closest-side, rgba(255,95,88,0.11), rgba(255,95,88,0.04) 50%, transparent); }
-  .light.wine { right: -240px; bottom: -160px; width: 760px; height: 560px;
-    background: radial-gradient(closest-side, rgba(120,28,40,0.22), rgba(120,28,40,0.07) 55%, transparent); }
-  /* Ask: coral-led lights with a hint of amber, the brightest end of the ramp. */
-  .light.ask { left: 50%; top: -60px; width: 1100px; height: 640px; margin-left: -550px;
-    background: radial-gradient(closest-side, rgba(255,95,88,0.20), rgba(255,95,88,0.07) 50%, transparent); }
-  .light.amber { left: 12%; top: 40%; width: 420px; height: 320px;
-    background: radial-gradient(closest-side, rgba(255,176,32,0.06), transparent); }
+  section { position: relative; }
+  /* Page backdrops, the same maths as the app's PageBackground.swift (each ellipse's radii are fractions of the
+     section's width and height, like the app's Light struct), stretched to the full window width and faded
+     at their top and bottom so the sections blend. */
+  .backdrop { position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); pointer-events: none;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent); }
+  /* Library: charcoal fading to black, a 3% white light from above, darker edges. */
+  .backdrop.library { top: -120px; -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent); mask-image: linear-gradient(180deg, #000 80%, transparent);
+    background:
+      radial-gradient(ellipse 125% 48% at 50% -12%, rgba(255,255,255,0.03), rgba(255,255,255,0) 70%),
+      radial-gradient(ellipse 140% 90% at 50% 40%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.5) 100%),
+      linear-gradient(180deg, #121110 0%, #0A0909 18%, #060505 40%, #040303 100%); }
+  /* Categories: watermelon light top-left, wine pool low right, a faint white light above. */
+  .backdrop.categories {
+    background:
+      radial-gradient(ellipse 112% 40% at 2% -14%, rgba(200,82,96,0.17), rgba(200,82,96,0) 72%),
+      radial-gradient(ellipse 104% 44% at 104% 58%, rgba(120,50,70,0.12), rgba(120,50,70,0) 72%),
+      radial-gradient(ellipse 168% 52% at 50% -10%, rgba(255,255,255,0.035), rgba(255,255,255,0) 70%),
+      radial-gradient(ellipse 140% 90% at 50% 40%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.45) 100%),
+      linear-gradient(180deg, #141011 0%, #0E0B0C 30%, #0A0908 60%); }
+  /* Ask: coral top-left, amber low right, a steel hint at the bottom. */
+  .backdrop.ask {
+    background:
+      radial-gradient(ellipse 90% 52% at 8% 4%, rgba(255,95,88,0.26), rgba(255,95,88,0.07) 48%, rgba(255,95,88,0) 74%),
+      radial-gradient(ellipse 60% 40% at 104% 78%, rgba(255,176,32,0.10), rgba(255,176,32,0) 70%),
+      radial-gradient(ellipse 78% 48% at 30% 104%, rgba(70,92,120,0.22), rgba(70,92,120,0) 72%),
+      #0A0908; }
+  /* Inside the phones: the screen's own backdrop. */
+  .app { background:
+      radial-gradient(ellipse 125% 48% at 50% -12%, rgba(255,255,255,0.03), rgba(255,255,255,0) 70%),
+      radial-gradient(ellipse 140% 90% at 50% 40%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.5) 100%),
+      linear-gradient(180deg, #121110 0%, #0A0909 18%, #060505 40%, #040303 100%); }
+  .app.askscreen { background:
+      radial-gradient(ellipse 90% 52% at 8% 4%, rgba(255,95,88,0.13), rgba(255,95,88,0.035) 48%, rgba(255,95,88,0) 74%),
+      radial-gradient(ellipse 60% 40% at 104% 78%, rgba(255,176,32,0.05), rgba(255,176,32,0) 70%),
+      radial-gradient(ellipse 78% 48% at 30% 104%, rgba(70,92,120,0.11), rgba(70,92,120,0) 72%),
+      #0A0908; }
+  .ui .sb { background: transparent; }
   /* Behind the phone: a soft coral-white rim like the app's cover glow, never a muddy coral wash. */
-  .glow { background: radial-gradient(closest-side, rgba(255,150,140,0.14), rgba(255,95,88,0.05) 55%, rgba(255,95,88,0) 100%); }
+  .glow { display: none; }
 
   /* Glass without outlines (chips, pills, inputs, cards), a 1px top highlight instead, like the app's light glass. */
   input[type=email], input[name=first] { border-color: transparent; background: var(--surface); box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); }
@@ -401,14 +424,14 @@
   .apps { display: flex; gap: 14px; margin: 0 0 16px; }
   .apps span { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 58px; font-size: 11.5px; color: rgba(255,255,255,0.8); }
   .apps i { display: block; width: 58px; height: 58px; border-radius: 14px; }
-  .apps .rk i { background: #0A0908 url(mark.png) center/78% no-repeat; box-shadow: 0 0 0 2.5px var(--accent), 0 0 24px rgba(255,95,88,0.55); animation: ring 1.8s ease-out infinite; }
+  .apps .rk i { background: url(apple-touch-icon.png) center/cover no-repeat; }
   .apps .rk { color: var(--text); font-weight: 650; }
   .sheet .rows { border-radius: 14px; background: #2C2C2E; }
   .sheet .rows p { margin: 0; padding: 14px 16px; font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .sheet .rows p:last-child { border-bottom: 0; }
   .saved { position: absolute; z-index: 3; left: 50%; top: 66px; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; padding: 9px 16px 9px 10px; border-radius: 24px; white-space: nowrap;
     font-size: 14px; font-weight: 600; color: var(--text); background: rgba(10,9,8,0.82); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
-  .saved i { width: 22px; height: 22px; border-radius: 6px; background: #0A0908 url(mark.png) center/80% no-repeat; }
+  .saved i { width: 22px; height: 22px; border-radius: 6px; background: url(apple-touch-icon.png) center/cover no-repeat; }
 
   /* Rook Pro, in two cards: free for good, Pro when you save a lot. Amber is the app's Pro colour. */
   .pro { padding: 0 0 80px; }
@@ -439,10 +462,10 @@
     </header>
 
     <section class="hero">
-      <div class="light library" aria-hidden="true"></div>
+      <div class="backdrop library" aria-hidden="true"></div>
       <div>
         <h1>The videos<br>you save,<br><em>actually used.</em></h1>
-        <p class="lead">Share a TikTok, Reel or YouTube video to Rook. It turns the video into steps, lists and key points, files it for you, and reminds you right when you need it.</p>
+        <p class="lead">Share a TikTok, Reel or YouTube video to Rook. It turns it into steps and lists, and brings it back when you need it.</p>
         <form id="join" novalidate>
           <input type="text" name="first" placeholder="First name" autocomplete="given-name" autocapitalize="words" maxlength="40" required aria-label="First name">
           <input type="email" name="email" placeholder="you@email.com" autocomplete="email" inputmode="email" required aria-label="Email">
@@ -593,25 +616,24 @@
     </section>
 
     <section class="how" aria-label="How Rook works">
-      <div class="light categories" aria-hidden="true"></div><div class="light wine" aria-hidden="true"></div>
+      <div class="backdrop categories" aria-hidden="true"></div>
       <h2 class="reveal">How it works</h2>
-      <p class="sub reveal">Three steps, and the first one is a tap you already know.</p>
-      <div class="trio">
-      <figure class="reveal"><div class="phone mini"><div class="screen"><div class="app"><div class="ui still shareui"><div class="sharevid"></div><div class="sb"><b>9:41</b><span><svg viewBox="0 0 20 12" width="19" height="12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3.2" height="4" rx="1"/><rect x="5.4" y="5.5" width="3.2" height="6.5" rx="1"/><rect x="10.8" y="3" width="3.2" height="9" rx="1"/><rect x="16.2" y="0" width="3.2" height="12" rx="1"/></svg><svg viewBox="0 0 18 13" width="17" height="12" fill="currentColor" aria-hidden="true"><path d="M9 2.2c2.6 0 5 1 6.8 2.7l1.3-1.4C14.9 1.4 12 .2 9 .2S3.1 1.4.9 3.5l1.3 1.4C4 3.2 6.4 2.2 9 2.2zm0 4c1.5 0 2.9.6 4 1.5l1.3-1.4A7.9 7.9 0 0 0 9 4.2c-2 0-3.9.8-5.3 2.1L5 7.7c1.1-.9 2.5-1.5 4-1.5zm0 4c.6 0 1.1.2 1.5.6L9 12.4l-1.5-1.6c.4-.4.9-.6 1.5-.6z"/></svg><i class="batt"><i></i></i></span></div><div class="saved" aria-hidden="true"><i></i>Saved to Rook</div><div class="sheet"><div class="grab"></div><div class="who2"><i></i><div><b>Weeknight Beef Pho</b><span>tiktok.com</span></div></div><div class="apps"><span><i style="background:#34C759"></i>Messages</span><span class="rk"><i></i>Rook</span><span><i style="background:#0A84FF"></i>Mail</span><span><i style="background:#FFD60A"></i>Notes</span></div><div class="rows"><p>Copy Link</p><p>Add to Favorites</p></div></div></div></div></div></div><figcaption><span class="step">1</span><h3>Share it to Rook</h3><p>Tap Share on any TikTok, Reel or YouTube video and pick Rook. That's the whole step. It keeps going while you keep scrolling.</p></figcaption></figure>
-      <figure class="reveal"><div class="phone mini"><div class="screen"><div class="app"><div class="ui still"><div class="sb"><b>9:41</b><span><svg viewBox="0 0 20 12" width="19" height="12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3.2" height="4" rx="1"/><rect x="5.4" y="5.5" width="3.2" height="6.5" rx="1"/><rect x="10.8" y="3" width="3.2" height="9" rx="1"/><rect x="16.2" y="0" width="3.2" height="12" rx="1"/></svg><svg viewBox="0 0 18 13" width="17" height="12" fill="currentColor" aria-hidden="true"><path d="M9 2.2c2.6 0 5 1 6.8 2.7l1.3-1.4C14.9 1.4 12 .2 9 .2S3.1 1.4.9 3.5l1.3 1.4C4 3.2 6.4 2.2 9 2.2zm0 4c1.5 0 2.9.6 4 1.5l1.3-1.4A7.9 7.9 0 0 0 9 4.2c-2 0-3.9.8-5.3 2.1L5 7.7c1.1-.9 2.5-1.5 4-1.5zm0 4c.6 0 1.1.2 1.5.6L9 12.4l-1.5-1.6c.4-.4.9-.6 1.5-.6z"/></svg><i class="batt"><i></i></i></span></div><div class="ltop"><span class="acct"><svg class="ic" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="9.5" r="3.3"/><path d="M5.8 18.6a7.5 7.5 0 0 1 12.4 0"/></svg></span><span class="lay"><i><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2.2"/></svg></i><i class="on"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.8"/><rect x="13" y="4" width="7" height="7" rx="1.8"/><rect x="4" y="13" width="7" height="7" rx="1.8"/><rect x="13" y="13" width="7" height="7" rx="1.8"/></svg></i><i><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="4.6" height="4.6" rx="1.2"/><rect x="9.7" y="3.5" width="4.6" height="4.6" rx="1.2"/><rect x="15.9" y="3.5" width="4.6" height="4.6" rx="1.2"/><rect x="3.5" y="9.7" width="4.6" height="4.6" rx="1.2"/><rect x="9.7" y="9.7" width="4.6" height="4.6" rx="1.2"/><rect x="15.9" y="9.7" width="4.6" height="4.6" rx="1.2"/><rect x="3.5" y="15.9" width="4.6" height="4.6" rx="1.2"/><rect x="9.7" y="15.9" width="4.6" height="4.6" rx="1.2"/><rect x="15.9" y="15.9" width="4.6" height="4.6" rx="1.2"/></svg></i></span></div><p class="lh">Your saves</p><div class="pills"><span>This week<b>5</b></span><span>Notes<b>3</b></span><span>TikTok<b>31</b></span><span>Instagram<b>18</b></span></div><div class="tiles"><div class="lcard"><div class="cov tall" style="background:#111 url(img/pho.jpg) center/cover"></div><p>Weeknight Beef Pho<small>kitchenbyleo · 3 wk. ago</small></p></div><div class="lcard"><span class="donebadge"><svg class="ic" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg> Done</span><div class="cov tall" style="background:#111 url(img/tower.jpg) center/cover"></div><p>Seafood Tower Thursdays<small>la.after.dark · 4 days ago</small></p></div><div class="lcard"><div class="cov tall" style="background:#111 url(img/falls.jpg) center/cover"></div><p>Iceland’s Bluest Waterfall<small>wander.nordic · 1 wk. ago</small></p></div><div class="lcard"><div class="cov tall" style="background:#111 url(img/mansion.jpg) center/cover"></div><p>A Perfect Day in Roma Norte<small>cdmx.eats · 1 wk. ago</small></p></div></div><div class="nav"><div class="navpill"><span class="on"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="currentColor" stroke="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="2"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="2"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="2"/><rect x="13" y="13" width="7.5" height="7.5" rx="2"/></svg><b>Library</b></span><span><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 21 8l-9 5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg><b>Categories</b></span></div><span class="askb"><svg class="ic" viewBox="0 0 24 24" width="28" height="28" fill="currentColor" stroke="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4c.7 4.6 3.4 7.3 8 8-4.6.7-7.3 3.4-8 8-.7-4.6-3.4-7.3-8-8 4.6-.7 7.3-3.4 8-8z"/><path d="M18.5 2c.3 1.6 1.2 2.5 2.8 2.8-1.6.3-2.5 1.2-2.8 2.8-.3-1.6-1.2-2.5-2.8-2.8 1.6-.3 2.5-1.2 2.8-2.8z"/></svg></span></div></div></div></div></div><figcaption><span class="step">2</span><h3>It files itself</h3><p>Every save lands in your Library with a breakdown that fits it: recipe cards, steps, places and key points, each linked to the exact second.</p></figcaption></figure>
-      <figure class="reveal"><div class="phone mini"><div class="screen"><div class="app"><div class="ui still"><div class="sb"><b>9:41</b><span><svg viewBox="0 0 20 12" width="19" height="12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3.2" height="4" rx="1"/><rect x="5.4" y="5.5" width="3.2" height="6.5" rx="1"/><rect x="10.8" y="3" width="3.2" height="9" rx="1"/><rect x="16.2" y="0" width="3.2" height="12" rx="1"/></svg><svg viewBox="0 0 18 13" width="17" height="12" fill="currentColor" aria-hidden="true"><path d="M9 2.2c2.6 0 5 1 6.8 2.7l1.3-1.4C14.9 1.4 12 .2 9 .2S3.1 1.4.9 3.5l1.3 1.4C4 3.2 6.4 2.2 9 2.2zm0 4c1.5 0 2.9.6 4 1.5l1.3-1.4A7.9 7.9 0 0 0 9 4.2c-2 0-3.9.8-5.3 2.1L5 7.7c1.1-.9 2.5-1.5 4-1.5zm0 4c.6 0 1.1.2 1.5.6L9 12.4l-1.5-1.6c.4-.4.9-.6 1.5-.6z"/></svg><i class="batt"><i></i></i></span></div><p class="me">at the store, what do I need for the pho?</p><p class="ans">From <b>Weeknight Beef Pho</b> by kitchenbyleo, for 4 bowls:</p><ul class="group ask"><li><i></i><span>Beef broth</span><em>8 cups</em></li><li><i></i><span>Rice noodles</span><em>14 oz</em></li><li><i></i><span>Sirloin</span><em>½ lb</em></li><li><i></i><span>Star anise</span><em>3</em></li><li><i></i><span>Thai basil, lime</span><em>1 each</em></li></ul><p class="me">anything coming up this week?</p><p class="ans">Two things from your saves:</p><div class="acard"><span class="cv" style="background:#111 url(img/tower.jpg) center/cover"></span><div><b>Seafood Tower Thursdays</b><em>Last one Thursday · 6 PM</em><span class="l">Book ahead, walk-ins wait an hour</span></div></div><div class="acard"><span class="cv" style="background:#111 url(img/garden.jpg) center/cover"></span><div><b>Free Garden Day</b><em>This Sunday · 10 AM</em><span class="l">Free tickets drop Friday at 9 AM</span></div></div><p class="ans">Want reminders for both?</p><div class="composer">Ask about your saves</div></div></div></div></div><figcaption><span class="step">3</span><h3>Ask anything. Miss nothing.</h3><p>Ask "what do I need for that pho?" and get a shopping list, or "anything coming up?" and see what's happening before you miss it.</p></figcaption></figure>
+            <div class="trio">
+      <figure class="reveal"><div class="phone mini"><div class="screen"><div class="app"><div class="ui still shareui"><div class="sharevid"></div><div class="sb"><b>9:41</b><span><svg viewBox="0 0 20 12" width="19" height="12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3.2" height="4" rx="1"/><rect x="5.4" y="5.5" width="3.2" height="6.5" rx="1"/><rect x="10.8" y="3" width="3.2" height="9" rx="1"/><rect x="16.2" y="0" width="3.2" height="12" rx="1"/></svg><svg viewBox="0 0 18 13" width="17" height="12" fill="currentColor" aria-hidden="true"><path d="M9 2.2c2.6 0 5 1 6.8 2.7l1.3-1.4C14.9 1.4 12 .2 9 .2S3.1 1.4.9 3.5l1.3 1.4C4 3.2 6.4 2.2 9 2.2zm0 4c1.5 0 2.9.6 4 1.5l1.3-1.4A7.9 7.9 0 0 0 9 4.2c-2 0-3.9.8-5.3 2.1L5 7.7c1.1-.9 2.5-1.5 4-1.5zm0 4c.6 0 1.1.2 1.5.6L9 12.4l-1.5-1.6c.4-.4.9-.6 1.5-.6z"/></svg><i class="batt"><i></i></i></span></div><div class="saved" aria-hidden="true"><i></i>Saved to Rook</div><div class="sheet"><div class="grab"></div><div class="who2"><i></i><div><b>Weeknight Beef Pho</b><span>tiktok.com</span></div></div><div class="apps"><span><i style="background:#34C759"></i>Messages</span><span class="rk"><i></i>Rook</span><span><i style="background:#0A84FF"></i>Mail</span><span><i style="background:#FFD60A"></i>Notes</span></div><div class="rows"><p>Copy Link</p><p>Add to Favorites</p></div></div></div></div></div></div><figcaption><span class="step">1</span><h3>Share it to Rook</h3><p>Tap Share on any TikTok, Reel or YouTube video and pick Rook.</p></figcaption></figure>
+      <figure class="reveal"><div class="phone mini"><div class="screen"><div class="app"><div class="ui still"><div class="sb"><b>9:41</b><span><svg viewBox="0 0 20 12" width="19" height="12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3.2" height="4" rx="1"/><rect x="5.4" y="5.5" width="3.2" height="6.5" rx="1"/><rect x="10.8" y="3" width="3.2" height="9" rx="1"/><rect x="16.2" y="0" width="3.2" height="12" rx="1"/></svg><svg viewBox="0 0 18 13" width="17" height="12" fill="currentColor" aria-hidden="true"><path d="M9 2.2c2.6 0 5 1 6.8 2.7l1.3-1.4C14.9 1.4 12 .2 9 .2S3.1 1.4.9 3.5l1.3 1.4C4 3.2 6.4 2.2 9 2.2zm0 4c1.5 0 2.9.6 4 1.5l1.3-1.4A7.9 7.9 0 0 0 9 4.2c-2 0-3.9.8-5.3 2.1L5 7.7c1.1-.9 2.5-1.5 4-1.5zm0 4c.6 0 1.1.2 1.5.6L9 12.4l-1.5-1.6c.4-.4.9-.6 1.5-.6z"/></svg><i class="batt"><i></i></i></span></div><div class="ltop"><span class="acct"><svg class="ic" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="9.5" r="3.3"/><path d="M5.8 18.6a7.5 7.5 0 0 1 12.4 0"/></svg></span><span class="lay"><i><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2.2"/></svg></i><i class="on"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.8"/><rect x="13" y="4" width="7" height="7" rx="1.8"/><rect x="4" y="13" width="7" height="7" rx="1.8"/><rect x="13" y="13" width="7" height="7" rx="1.8"/></svg></i><i><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="4.6" height="4.6" rx="1.2"/><rect x="9.7" y="3.5" width="4.6" height="4.6" rx="1.2"/><rect x="15.9" y="3.5" width="4.6" height="4.6" rx="1.2"/><rect x="3.5" y="9.7" width="4.6" height="4.6" rx="1.2"/><rect x="9.7" y="9.7" width="4.6" height="4.6" rx="1.2"/><rect x="15.9" y="9.7" width="4.6" height="4.6" rx="1.2"/><rect x="3.5" y="15.9" width="4.6" height="4.6" rx="1.2"/><rect x="9.7" y="15.9" width="4.6" height="4.6" rx="1.2"/><rect x="15.9" y="15.9" width="4.6" height="4.6" rx="1.2"/></svg></i></span></div><p class="lh">Your saves</p><div class="pills"><span>This week<b>5</b></span><span>Notes<b>3</b></span><span>TikTok<b>31</b></span><span>Instagram<b>18</b></span></div><div class="tiles"><div class="lcard"><div class="cov tall" style="background:#111 url(img/pho.jpg) center/cover"></div><p>Weeknight Beef Pho<small>kitchenbyleo · 3 wk. ago</small></p></div><div class="lcard"><span class="donebadge"><svg class="ic" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg> Done</span><div class="cov tall" style="background:#111 url(img/tower.jpg) center/cover"></div><p>Seafood Tower Thursdays<small>la.after.dark · 4 days ago</small></p></div><div class="lcard"><div class="cov tall" style="background:#111 url(img/falls.jpg) center/cover"></div><p>Iceland’s Bluest Waterfall<small>wander.nordic · 1 wk. ago</small></p></div><div class="lcard"><div class="cov tall" style="background:#111 url(img/mansion.jpg) center/cover"></div><p>A Perfect Day in Roma Norte<small>cdmx.eats · 1 wk. ago</small></p></div></div><div class="nav"><div class="navpill"><span class="on"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="currentColor" stroke="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="2"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="2"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="2"/><rect x="13" y="13" width="7.5" height="7.5" rx="2"/></svg><b>Library</b></span><span><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 21 8l-9 5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg><b>Categories</b></span></div><span class="askb"><svg class="ic" viewBox="0 0 24 24" width="28" height="28" fill="currentColor" stroke="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4c.7 4.6 3.4 7.3 8 8-4.6.7-7.3 3.4-8 8-.7-4.6-3.4-7.3-8-8 4.6-.7 7.3-3.4 8-8z"/><path d="M18.5 2c.3 1.6 1.2 2.5 2.8 2.8-1.6.3-2.5 1.2-2.8 2.8-.3-1.6-1.2-2.5-2.8-2.8 1.6-.3 2.5-1.2 2.8-2.8z"/></svg></span></div></div></div></div></div><figcaption><span class="step">2</span><h3>It organizes itself</h3><p>Each save gets a breakdown that fits it, linked to the exact second in the video.</p></figcaption></figure>
+      <figure class="reveal"><div class="phone mini"><div class="screen"><div class="app askscreen"><div class="ui still"><div class="sb"><b>9:41</b><span><svg viewBox="0 0 20 12" width="19" height="12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3.2" height="4" rx="1"/><rect x="5.4" y="5.5" width="3.2" height="6.5" rx="1"/><rect x="10.8" y="3" width="3.2" height="9" rx="1"/><rect x="16.2" y="0" width="3.2" height="12" rx="1"/></svg><svg viewBox="0 0 18 13" width="17" height="12" fill="currentColor" aria-hidden="true"><path d="M9 2.2c2.6 0 5 1 6.8 2.7l1.3-1.4C14.9 1.4 12 .2 9 .2S3.1 1.4.9 3.5l1.3 1.4C4 3.2 6.4 2.2 9 2.2zm0 4c1.5 0 2.9.6 4 1.5l1.3-1.4A7.9 7.9 0 0 0 9 4.2c-2 0-3.9.8-5.3 2.1L5 7.7c1.1-.9 2.5-1.5 4-1.5zm0 4c.6 0 1.1.2 1.5.6L9 12.4l-1.5-1.6c.4-.4.9-.6 1.5-.6z"/></svg><i class="batt"><i></i></i></span></div><p class="me">at the store, what do I need for the pho?</p><p class="ans">From <b>Weeknight Beef Pho</b> by kitchenbyleo, for 4 bowls:</p><ul class="group ask"><li><i></i><span>Beef broth</span><em>8 cups</em></li><li><i></i><span>Rice noodles</span><em>14 oz</em></li><li><i></i><span>Sirloin</span><em>½ lb</em></li><li><i></i><span>Star anise</span><em>3</em></li><li><i></i><span>Thai basil, lime</span><em>1 each</em></li></ul><p class="me">anything coming up this week?</p><p class="ans">Two things from your saves:</p><div class="acard"><span class="cv" style="background:#111 url(img/tower.jpg) center/cover"></span><div><b>Seafood Tower Thursdays</b><em>Last one Thursday · 6 PM</em><span class="l">Book ahead, walk-ins wait an hour</span></div></div><div class="acard"><span class="cv" style="background:#111 url(img/garden.jpg) center/cover"></span><div><b>Free Garden Day</b><em>This Sunday · 10 AM</em><span class="l">Free tickets drop Friday at 9 AM</span></div></div><p class="ans">Want reminders for both?</p><div class="composer">Ask about your saves</div></div></div></div></div><figcaption><span class="step">3</span><h3>Ask anything. Miss nothing.</h3><p>"What do I need for that pho?" gets a shopping list. "Anything coming up?" gets your plans.</p></figcaption></figure>
       </div>
     </section>
 
     <section class="remind reveal" id="reminders" aria-label="Reminders">
       <div>
         <h2>It comes back when you need it.</h2>
-        <p class="sub">Saving is easy. Remembering is the hard part. Rook brings the right save back at the right moment, so the recipe gets cooked and the pop-up doesn't pass you by.</p>
+        <p class="sub">Rook brings the right save back at the right moment, so the recipe gets cooked and the pop-up doesn't pass you by.</p>
         <ul class="rlist">
           <li><span class="ri"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6.5 2.5 8 2.5 8h-17S6 15.5 6 9"/><path d="M10.2 20.5a2 2 0 0 0 3.6 0"/></svg></span><div><h3>Remind me, on any save</h3><p>Tonight, tomorrow morning, this weekend, or any day you pick. One tap.</p></div></li>
-          <li><span class="ri"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span><div><h3>Rook spots the dates</h3><p>Saved a pop-up, a ticket drop or a last day? Rook offers a reminder before it's gone, or adds it to your calendar. It never sets one without asking.</p></div></li>
-          <li><span class="ri"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><h3>Picks that fit the moment</h3><p>Recipes come back around dinner, workouts in the morning, plans for the weekend.</p></div></li>
-          <li><span class="ri"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span><div><h3>Never noisy</h3><p>One morning pick a day at most, only if you turn it on. Each notification says what it is and why, in one line.</p></div></li>
+          <li><span class="ri"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span><div><h3>Rook spots the dates</h3><p>A pop-up, a ticket drop, a last day: Rook offers a reminder before it's gone.</p></div></li>
+          
+          <li><span class="ri"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span><div><h3>Never noisy</h3><p>One morning pick a day at most, and only if you turn it on.</p></div></li>
         </ul>
       </div>
       <div class="stagemini"><div class="phone mini"><div class="screen"><div class="lock">
@@ -625,7 +647,7 @@
 
     <section class="pro reveal" id="pro" aria-label="Rook Pro">
       <h2>Free to save. Pro when you save a lot.</h2>
-      <p class="sub">Everything you need to save and find your videos is free for good. Rook Pro breaks down all of it.</p>
+      <p class="sub">Saving and finding your videos is free for good.</p>
       <div class="plans">
         <div class="plan"><h3>Rook</h3><p class="price">Free</p><ul><li>Save from TikTok, Instagram and YouTube</li><li>Your Library, albums and reminders</li><li>5 full breakdowns and 5 Ask questions a month</li><li>A quick summary on every other save</li></ul></div>
         <div class="plan pro2"><h3>Rook Pro</h3><p class="price">$6.99 a month or $49.99 a year · 2 weeks free</p><ul><li>Full breakdowns on everything you save</li><li>Recipe cards, steps and timestamps</li><li>Long videos broken down in full</li><li>60 Ask questions a month</li></ul></div>
@@ -645,9 +667,9 @@
     </section>
 
     <section class="again reveal">
-      <div class="light ask" aria-hidden="true"></div><div class="light amber" aria-hidden="true"></div>
+      <div class="backdrop ask" aria-hidden="true"></div>
       <h2>The first wave is small. Get in it.</h2>
-      <p class="sub">We're letting people in a few hundred at a time, in the order they joined. The earlier you're on the list, the sooner your invite comes.</p>
+      <p class="sub">Invites go out a few hundred at a time, in the order people joined.</p>
       <a class="cta" href="#join" onclick="setTimeout(function(){document.querySelector('#join input[name=first]').focus()},300)">Save my spot</a>
     </section>
 
