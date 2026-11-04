@@ -439,6 +439,8 @@
   .saved i { width: 22px; height: 22px; border-radius: 6px; background: url(apple-touch-icon.png) center/cover no-repeat; }
 
   /* Rook Pro, in two cards: free for good, Pro when you save a lot. Amber is the app's Pro colour. */
+  .perk { display: flex; align-items: center; gap: 8px; margin: 14px 0 0 6px; font-size: 14px; font-weight: 600; color: #FFC94D; }
+  .perk i { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #FFB020; }
   .pro { padding: 0 0 80px; }
   .pro > h2 { text-align: center; font-size: clamp(26px, 3.6vw, 38px); letter-spacing: -0.025em; margin: 0 0 8px; }
   .pro > p.sub { text-align: center; color: var(--muted); margin: 0 auto 32px; max-width: 44ch; font-size: 16.5px; line-height: 1.5; }
@@ -477,6 +479,7 @@
           <input class="trap" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button type="submit">Get early access</button>
         </form>
+        <p class="perk"><i></i>First wave gets their first month of Rook Pro free.</p>
         <p class="note" id="note" role="status">For iPhone. We'll only email you about Rook.</p>
         <p class="count" id="count" hidden><b></b> people are already waiting.</p>
         <div class="share" id="share" hidden>
@@ -662,13 +665,13 @@
       <details data-q="videos"><summary>Does Rook download or repost videos?</summary><p>No. Rook never stores the video. Your saves play from the original post, with the creator credited and a link back to it.</p></details>
       <details data-q="android"><summary>Is there an Android version?</summary><p>Not yet. Rook is iPhone only for now, but we plan to make an Android version in the future. Join the list and we'll email you when it's ready.</p></details>
       <details data-q="data"><summary>What happens to my data?</summary><p>Your saves are private to you, we never sell your data, and you can delete your account and everything in it at any time. The details are in our <a href="privacy.html">privacy policy</a>.</p></details>
-      <details data-q="when"><summary>When do I get in?</summary><p>We're sending invites in waves, in the order people joined. After you join you get a link: every friend who signs up with it moves you up 25 spots.</p></details>
+      <details data-q="when"><summary>When do I get in?</summary><p>We're sending invites in waves, in the order people joined. After you join you get a link: every friend who signs up with it moves you up 25 spots. Everyone in the first wave gets their first month of Rook Pro free.</p></details>
     </section>
 
     <section class="again reveal">
       <div class="backdrop ask" aria-hidden="true"></div>
       <h2>The first wave is small. Get in it.</h2>
-      <p class="sub">Invites go out a few hundred at a time, in the order people joined.</p>
+      <p class="sub">Invites go out a few hundred at a time, in the order people joined. The first wave gets their first month of Rook Pro free.</p>
       <a class="cta" href="#join" onclick="setTimeout(function(){document.querySelector('#join input[name=first]').focus()},300)">Save my spot</a>
     </section>
 
