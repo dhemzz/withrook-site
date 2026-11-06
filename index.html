@@ -536,6 +536,11 @@
     .plan { padding: 24px; }
     footer { padding: 32px 0 56px; }
   }
+
+  /* Small phones match the screenshots' shape (660x1434), so object-fit: cover no longer trims the sides
+     and the app's own side margins show in full (Tye 2026-11-06: cards looked jammed against the edges). */
+  .phone.mini { aspect-ratio: auto; }
+  .phone.mini .screen { height: auto; aspect-ratio: 660 / 1434; }
 </style>
 </head>
 <body>
